@@ -14,13 +14,13 @@ class Canvas extends Component {
         this.canvasDrawer = new CanvasDrawer(canvas);
 
         ctx.fillRect(0,0, canvas.width, canvas.height);
-
-        setInterval(this.canvasDrawer.doWork, 1000);
+        
+        setInterval(this.canvasDrawer.doWork, 10);
     }
 
     render() {
         return (
-            <canvas ref="canvas" width={300} height={300}/>
+            <canvas ref="canvas" width={100} height={100}/>
         );
     }
 }

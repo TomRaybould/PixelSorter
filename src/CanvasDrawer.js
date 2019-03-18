@@ -2,29 +2,26 @@
 
 class CanvasDrawer {
     constructor(canvas){
-    
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.color = false;
+        this.pixel = 0;
     }
 
     doWork = (canvas) => {
 
-        const imageData = this.ctx.getImageData(0,0,this.canvas.width, this.canvas.height);
+        const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
         const data = imageData.data;
         
         for (var i = 0; i < data.length; i += 4) {
-            var val = this.color ? 255 : 0;
+            var val = this.pixel === i ? 255 : 0;
             data[i] = val; 
             data[i+1] = val; 
             data[i+2] = val; 
             data[i+3] = 255; 
         }
 
-        this.color = !this.color;
+        this.pixel+=4;
         this.showPixels(this.ctx, imageData);
-        //pixel += 4;
-    
     }
         
     /*
