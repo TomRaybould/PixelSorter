@@ -93,8 +93,7 @@ class CanvasDrawer {
         this.pixels[ogIndex].currentPosition = destIndex;
         this.pixels[destIndex].currentPosition = ogIndex; 
 
-        this.ctx.putImageData(this.imageData, 0, 0);
-
+        this.ctx.putImageData(this.imageData, 0, 0)
     }
 
 }
