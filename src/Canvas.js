@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import CanvasDrawer from './CanvasDrawer.js'
 
 class Canvas extends Component {
-    constructor(){
-        super();
-    }
     componentDidMount() {
         this.updateCanvas()
     }
