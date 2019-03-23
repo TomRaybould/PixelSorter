@@ -1,5 +1,6 @@
 
 import Pixel from './Pixel'
+import Scrambler from './Scrambler'
 
 class CanvasDrawer {
     constructor(canvas){
@@ -9,21 +10,18 @@ class CanvasDrawer {
         this.pixels = [];
     }
 
-    drawImage = (canvas) => {
-
-        if(this.pixels.length === 0){
-            const url = 'color_bars.png'
-
-            var loadImage = function (url, onImageLoaded) {
-                var img = new Image();
-                img.src = url
-                img.onload = function () { 
-                    onImageLoaded(img);
-                }
+    drawImage = (onImageLoaded) => {
+        this.onImageLoaded = onImageLoaded;
+        const url = 'color_bars.png'
+        
+        var loadImage = function (url, onImageLoaded) {
+            var img = new Image();
+            img.src = url
+            img.onload = function () { 
+                onImageLoaded(img);
             }
-            loadImage(url, this.processImageIntoPixelArray);
         }
-
+        loadImage(url, this.processImageIntoPixelArray);
     }
 
     processImageIntoPixelArray = (image) => {
@@ -38,7 +36,7 @@ class CanvasDrawer {
     }
 
     processPixels = () => {
-        
+
         let curr = this.pixels.length ? this.pixels.length : 0;
         
         const sectionLength = curr + (20000 * 4);
@@ -56,6 +54,7 @@ class CanvasDrawer {
 
         if(curr + 3 >= this.imageData.data.length){
             console.log('Done loading pixels');
+            this.onImageLoaded();
             return;
         }
         window.setTimeout(this.processPixels, 0);
@@ -65,6 +64,37 @@ class CanvasDrawer {
     resizeCanvas = (width, height) => {
         this.canvas.width = width;
         this.canvas.height = height;
+    }
+
+    scramble = () => {
+        const scrambler = new Scrambler(this.pixels, this.swapPixels);
+        scrambler.scramble();
+    }
+
+    swapPixels = (ogIndex, destIndex) => {
+        const rawData = this.imageData.data;
+        
+        const tempData = [];
+        tempData[0] = rawData[destIndex];
+        tempData[1] = rawData[destIndex + 1];
+        tempData[2] = rawData[destIndex + 2];
+        tempData[3] = rawData[destIndex + 3];
+
+        rawData[destIndex]     = rawData[ogIndex];
+        rawData[destIndex + 1] = rawData[ogIndex + 1];
+        rawData[destIndex + 2] = rawData[ogIndex + 2];
+        rawData[destIndex + 3] = rawData[ogIndex + 3];
+
+        rawData[ogIndex]     = tempData[0];
+        rawData[ogIndex + 1] = tempData[1];
+        rawData[ogIndex + 2] = tempData[2];
+        rawData[ogIndex + 3] = tempData[3];
+    
+        this.pixels[ogIndex].currentPosition = destIndex;
+        this.pixels[destIndex].currentPosition = ogIndex; 
+
+        this.ctx.putImageData(this.imageData, 0, 0);
+
     }
 
 }
