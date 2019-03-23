@@ -15,7 +15,9 @@ class Canvas extends Component {
 
         ctx.fillRect(0,0, canvas.width, canvas.height);
         
-        setInterval(this.canvasDrawer.doWork, 10);
+        this.canvasDrawer.drawImage();
+
+        //setInterval(this.canvasDrawer.doWork, 10);
     }
 
     render() {
