@@ -67,7 +67,7 @@ class CanvasDrawer {
     }
 
     scramble = () => {
-        const scrambler = new Scrambler(this.pixels, this.swapPixels);
+        const scrambler = new Scrambler(this.pixels, this.swapPixels, this.redraw);
         scrambler.scramble();
     }
 
@@ -92,8 +92,11 @@ class CanvasDrawer {
     
         this.pixels[ogIndex].currentPosition = destIndex;
         this.pixels[destIndex].currentPosition = ogIndex; 
+        
+    }
 
-        this.ctx.putImageData(this.imageData, 0, 0)
+    redraw = () => {
+        this.ctx.putImageData(this.imageData, 0, 0);
     }
 
 }
