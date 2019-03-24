@@ -13,34 +13,38 @@ class PixelQuickSort{
             return;
         }
         
-        let maxCount = 500;
-        let count = 0;
+        let maxCompCount = 500;
+        let compCount = 0;
 
-        while(left < right){
+        while(left < right && compCount < maxCompCount){
 
-            while(arr[left].comparedTo(arr[pivot]) < 0 && left < right){
+            while(arr[left].comparedTo(arr[pivot]) < 0 && left < right && compCount < maxCompCount){
                 left ++;
-                count++;
+                compCount++;
             } 
-            while(arr[right].comparedTo(arr[pivot]) > 0 && left < right){
+            while(arr[right].comparedTo(arr[pivot]) > 0 && left < right && compCount < maxCompCount){
                 right --;
-                count++;
+                compCount++;
             }
         
             if(arr[left].comparedTo(arr[pivot]) > 0 && arr[right].comparedTo(arr[pivot]) < 0 && left < right){
                 this.swapPixels(left, right);
             }
+            compCount++;
 
-            if(count > maxCount){
+            if(compCount > maxCompCount && right - left > 50){
                 break;
             }
         }
 
         if(left < right){
+            
             let sort = () =>{
                 this.quickSort(arr, start, end, left, right);
             }
-            window.setTimeout(sort, 10);
+            
+            window.setTimeout(sort, 5);
+        
             return;
         }
 
