@@ -41,11 +41,11 @@ class PixelQuickSort{
 
         this.swapPixels(sortedIndex, pivot);
         
-        const fun1 = () => {
+        const sort = () => {
             this.quickSort(arr, start, sortedIndex - 1);
             this.quickSort(arr, sortedIndex + 1, end);
         }
-        window.setTimeout(fun1, 0);
+        window.setTimeout(sort, 0);
 
     }
 }

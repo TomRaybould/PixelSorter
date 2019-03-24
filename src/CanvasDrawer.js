@@ -43,7 +43,6 @@ class CanvasDrawer {
         startIndex = startIndex * 4;
 
         const sectionLength = startIndex + (1000 * 4);
-        console.log(startIndex);
 
         for(let i = startIndex; i < sectionLength; i += 4){
             startIndex = i;
@@ -63,8 +62,6 @@ class CanvasDrawer {
         }
 
         if(startIndex + 3 >= this.imageData.data.length){
-            console.log('Done loading pixels');
-            console.log(this.pixels);
             this.onImageLoaded();
             return;
         }
@@ -86,7 +83,6 @@ class CanvasDrawer {
     onScrambleFinished = () => {
         const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw);
         pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1);
-        console.log("sorted");
         setInterval(this.redraw, 10);
         this.redraw();
     } 

@@ -19,7 +19,6 @@ class Canvas extends Component {
     }
 
     onImageLoaded = () => {
-        console.log("loaded");
         this.scramble();
     }
 
