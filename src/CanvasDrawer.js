@@ -1,6 +1,7 @@
 
 import Pixel from './Pixel'
 import Scrambler from './Scrambler'
+import PixelQuickSort from './PixelQuickSort'
 
 class CanvasDrawer {
     constructor(canvas){
@@ -78,14 +79,21 @@ class CanvasDrawer {
     }
 
     scramble = () => {
-        const scrambler = new Scrambler(this.pixels, this.swapPixels, this.redraw);
+        const scrambler = new Scrambler(this.pixels, this.swapPixels, this.redraw, this.onScrambleFinished);
         scrambler.scramble();
     }
 
+    onScrambleFinished = () => {
+        const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw);
+        pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1);
+        console.log("sorted");
+        this.redraw();
+    } 
+
     swapPixels = (ogIndex, destIndex) => {
-        
-        this.pixels[ogIndex].currentPosition = destIndex;
-        this.pixels[destIndex].currentPosition = ogIndex; 
+        const tempPixel = this.pixels[ogIndex];
+        this.pixels[ogIndex] = this.pixels[destIndex];
+        this.pixels[destIndex] = tempPixel; 
 
         ogIndex = ogIndex * 4;
         destIndex = destIndex * 4;

@@ -1,14 +1,16 @@
 
 class Scrambler {
-    constructor(pixels, swapPixels, redraw){
+    constructor(pixels, swapPixels, redraw, onScrambleDone){
         this.pixels = pixels;
         this.swapPixels = swapPixels;
         this.redraw = redraw;
+        this.onScrambleDone = onScrambleDone;
         this.count = 0;
     }
 
     scramble = () => {
-        if(this.count > 500){
+        if(this.count > 200){
+            this.onScrambleDone();
             return;
         }
         
@@ -17,6 +19,8 @@ class Scrambler {
             const index2 = Math.floor(Math.random() * this.pixels.length);
             this.swapPixels(index1, index2);
         }
+
+        this.count++;
 
         this.redraw();
 
