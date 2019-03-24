@@ -37,26 +37,37 @@ class CanvasDrawer {
 
     processPixels = () => {
 
-        let curr = this.pixels.length ? this.pixels.length : 0;
+        let startIndex = this.pixels.length ? this.pixels.length : 0;
         
-        const sectionLength = curr + (20000 * 4);
+        startIndex = startIndex * 4;
 
-        for(let i = curr; i < sectionLength; i += 4){
-            curr = i;
-            const pixelPosition = i / 4;
+        const sectionLength = startIndex + (1000 * 4);
+        console.log(startIndex);
+
+        for(let i = startIndex; i < sectionLength; i += 4){
+            startIndex = i;
+
+            if(startIndex + 3 > this.imageData.data.length){
+                break;
+            }
+
+            const pixelPosition = i;
             const pixel = new Pixel();
             
             pixel.truePosition      = pixelPosition;
             pixel.currentPosition   = pixelPosition;
             
             this.pixels.push(pixel);
+            
         }
 
-        if(curr + 3 >= this.imageData.data.length){
+        if(startIndex + 3 >= this.imageData.data.length){
             console.log('Done loading pixels');
+            console.log(this.pixels);
             this.onImageLoaded();
             return;
         }
+        
         window.setTimeout(this.processPixels, 0);
 
     }
@@ -72,6 +83,13 @@ class CanvasDrawer {
     }
 
     swapPixels = (ogIndex, destIndex) => {
+        
+        this.pixels[ogIndex].currentPosition = destIndex;
+        this.pixels[destIndex].currentPosition = ogIndex; 
+
+        ogIndex = ogIndex * 4;
+        destIndex = destIndex * 4;
+
         const rawData = this.imageData.data;
         
         const tempData = [];
@@ -89,9 +107,6 @@ class CanvasDrawer {
         rawData[ogIndex + 1] = tempData[1];
         rawData[ogIndex + 2] = tempData[2];
         rawData[ogIndex + 3] = tempData[3];
-    
-        this.pixels[ogIndex].currentPosition = destIndex;
-        this.pixels[destIndex].currentPosition = ogIndex; 
         
     }
 
