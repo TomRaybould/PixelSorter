@@ -87,6 +87,7 @@ class CanvasDrawer {
         const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw);
         pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1);
         console.log("sorted");
+        setInterval(this.redraw, 10);
         this.redraw();
     } 
 
