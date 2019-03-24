@@ -83,8 +83,8 @@ class CanvasDrawer {
     onScrambleFinished = () => {
         const sort = () =>{        
             const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw);
-            pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1);
-            setInterval(this.redraw, 20);
+            pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1, 1, this.pixels.length - 1);
+            setInterval(this.redraw, 10);
         }
         setTimeout(sort, 2000);
     } 
