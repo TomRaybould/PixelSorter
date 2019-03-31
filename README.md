@@ -7,9 +7,9 @@ This project is a visualization of the quicksort algorithm. The pixels of a give
 
 </p>
 
-[Pixel Sort Example]:https://media.giphy.com/media/35QergvQWjIkkdaqVN/giphy.gif
+![Pixel Sort Example](https://res.cloudinary.com/dgrwnfwr2/image/upload/v1554067971/pixel-sorter_i4saf1.gif)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
