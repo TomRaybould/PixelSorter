@@ -1,5 +1,5 @@
 
-class PixelQuickSort{
+class PixelQuickSorter{
     constructor(swapPixels, redraw, onPixelsSorted){
         this.swapPixels = swapPixels;
         this.redraw = redraw;
@@ -7,6 +7,9 @@ class PixelQuickSort{
         this.callStackCounter = 0;
     }
 
+    sort = (arr) => {
+        this.quickSort(arr, 0, arr.length - 1, 1, arr.length - 1);
+    }
 
     quickSort = (arr, start, end, left, right) => {
         const pivot = start;
@@ -46,11 +49,11 @@ class PixelQuickSort{
 
         if(left < right){
             
-            let sort = () =>{
+            const qSort = () =>{
                 this.quickSort(arr, start, end, left, right);
             }
             
-            window.setTimeout(sort, 5);
+            window.setTimeout(qSort, 5);
             return;
         }
 
@@ -80,4 +83,4 @@ class PixelQuickSort{
 
 }
 
-export default PixelQuickSort;
+export default PixelQuickSorter;

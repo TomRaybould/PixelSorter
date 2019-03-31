@@ -1,7 +1,7 @@
 
 import Pixel from './Pixel'
 import Scrambler from './Scrambler'
-import PixelQuickSort from './PixelQuickSort'
+import PixelQuickSorter from './PixelQuickSorter'
 
 class CanvasDrawer {
     constructor(canvas){
@@ -63,11 +63,10 @@ class CanvasDrawer {
 
         if(startIndex + 3 >= this.imageData.data.length){
             this.onImageLoaded();
+            setInterval(this.redraw, 10);
             return;
         }
-        
         window.setTimeout(this.processPixels, 0);
-
     }
 
     resizeCanvas = (width, height) => {
@@ -80,15 +79,18 @@ class CanvasDrawer {
         scrambler.scramble();
     }
 
+    getSorter = () => {
+        return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);;
+    }
+
     onScrambleFinished = () => {  
-        const redrawHandler = setInterval(this.redraw, 10);
-        const onPixelsSorted = () => {
-            clearInterval(redrawHandler);
-            this.scramble();
-        }
-        const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw, onPixelsSorted);
-        pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1, 1, this.pixels.length - 1);
+        const sorter = this.getSorter();
+        sorter.sort(this.pixels);
     } 
+
+    onPixelsSorted = () => {
+        this.scramble();
+    }
 
     swapPixels = (ogIndex, destIndex) => {
         const tempPixel = this.pixels[ogIndex];
