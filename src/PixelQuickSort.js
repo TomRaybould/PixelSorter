@@ -4,12 +4,19 @@ class PixelQuickSort{
         this.swapPixels = swapPixels;
         this.redraw = redraw;
         this.onPixelsSorted = onPixelsSorted;
+        this.callStackCounter = 0;
     }
 
+
     quickSort = (arr, start, end, left, right) => {
-        const pivot = start; 
+        const pivot = start;
+        
+        if(start + 1 === left && end === right){
+            this.callStackCounter++;
+        }
 
         if(left > right){
+            this.decreamentCallStackCounter();
             return;
         }
         
@@ -44,7 +51,6 @@ class PixelQuickSort{
             }
             
             window.setTimeout(sort, 5);
-        
             return;
         }
 
@@ -62,7 +68,16 @@ class PixelQuickSort{
         this.quickSort(arr, start, sortedIndex - 1, start + 1, sortedIndex - 1);
         this.quickSort(arr, sortedIndex + 1, end, sortedIndex + 2, end);
 
+        this.decreamentCallStackCounter();
     }
+
+    decreamentCallStackCounter = () => {
+        this.callStackCounter--;
+        if(this.callStackCounter <= 0){
+            this.onPixelsSorted();
+        }
+    }
+
 }
 
 export default PixelQuickSort;

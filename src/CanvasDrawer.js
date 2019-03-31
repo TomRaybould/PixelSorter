@@ -80,13 +80,14 @@ class CanvasDrawer {
         scrambler.scramble();
     }
 
-    onScrambleFinished = () => {
-        const sort = () =>{        
-            const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw);
-            pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1, 1, this.pixels.length - 1);
-            setInterval(this.redraw, 10);
+    onScrambleFinished = () => {  
+        const redrawHandler = setInterval(this.redraw, 10);
+        const onPixelsSorted = () => {
+            clearInterval(redrawHandler);
+            this.scramble();
         }
-        setTimeout(sort, 2000);
+        const pixelQuickSort = new PixelQuickSort(this.swapPixels, this.redraw, onPixelsSorted);
+        pixelQuickSort.quickSort(this.pixels, 0, this.pixels.length - 1, 1, this.pixels.length - 1);
     } 
 
     swapPixels = (ogIndex, destIndex) => {
