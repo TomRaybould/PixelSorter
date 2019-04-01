@@ -1,7 +1,8 @@
 
 import Pixel from './Pixel'
 import Scrambler from './Scrambler'
-import PixelQuickSorter from './PixelQuickSorter'
+//import PixelQuickSorter from './PixelQuickSorter'
+import PixelHeapSorter from './PixelHeapSorter'
 
 class CanvasDrawer {
     constructor(canvas){
@@ -80,7 +81,8 @@ class CanvasDrawer {
     }
 
     getSorter = () => {
-        return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);;
+        //return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
     }
 
     onScrambleFinished = () => {  
@@ -89,7 +91,7 @@ class CanvasDrawer {
     } 
 
     onPixelsSorted = () => {
-        this.scramble();
+        //this.scramble();
     }
 
     swapPixels = (ogIndex, destIndex) => {
