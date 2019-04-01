@@ -6,10 +6,7 @@ class PixelHeapSorter{
     }
 
     sort = (arr) => {
-        setTimeout(() => {
-            this.buildMaxHeap(arr, 0);
-        }, 1000);
-        
+        this.buildMaxHeap(arr, 0);    
         this.onPixelsSorted();
     }
 
@@ -28,25 +25,21 @@ class PixelHeapSorter{
             }
         
         }
-
-        console.log(arr[0].truePosition);
         this.heapify(arr, arr.length - 1);
     }
     
 
     heapify = (arr, start) => {
-        //console.log(start);
         for(let i = start; i >= 0 ; i--){
 
             this.swapPixels(0, i);
             this.siftDown(0, i - 1, arr);
-            
-            
+
             if(i % 1000 === 0){
                 const keepBuilding = () => {
                     this.heapify(arr, i - 1);
                 }
-
+                
                 setTimeout(keepBuilding, 50);
                 return;
             }
@@ -61,10 +54,6 @@ class PixelHeapSorter{
         const parent = arr[currPos];
         const leftChildPos  = (2 * currPos) + 1;
         const rightChildPos = (2 * currPos) + 2;
-    
-        // console.log("parent : " + currPos);
-        // console.log("left : " + leftChildPos);
-        // console.log("right : " + rightChildPos);
 
         if(leftChildPos <= endPos && rightChildPos <= endPos){
             const leftChild = arr[leftChildPos];
