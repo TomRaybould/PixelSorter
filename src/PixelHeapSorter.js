@@ -41,19 +41,16 @@ class PixelHeapSorter{
             this.swapPixels(0, i);
             this.siftDown(0, i - 1, arr);
             
-            /*
+            
             if(i % 1000 === 0){
                 const keepBuilding = () => {
-                    this.heapify(arr, i + 1);
+                    this.heapify(arr, i - 1);
                 }
 
-                setTimeout(keepBuilding, i-1);
+                setTimeout(keepBuilding, 50);
                 return;
             }
-            */
             
-            
-        
         }
 
     }
