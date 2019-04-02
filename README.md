@@ -10,7 +10,7 @@ This project is a visualization of the quicksort algorithm. The pixels of a give
 ![Pixel Sort Example](https://res.cloudinary.com/dgrwnfwr2/image/upload/v1554067971/pixel-sorter_i4saf1.gif)
 
 <p>
-Declaimer: The blurriness/choppiness of the scrambling above is due the recording of the gif and is not how the actual project looks when running in the browser. 
+Disclaimer: The blurriness/choppiness of the scrambling above is due the recording of the gif and is not how the actual project looks when running in the browser. 
 </p>
 
 ## Available Scripts
