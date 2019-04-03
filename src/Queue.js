@@ -8,7 +8,7 @@ class Queue{
     }
 
     isEmpty = () => {
-        return this.isEmpty;
+        return this.empty;
     }
 
     enqueue = (element) => {
@@ -30,7 +30,7 @@ class Queue{
     }
 
     dequeue = () => {
-        const element = this.front;
+        const element = this.front.element;
 
         if(this.front === this.end){
             this.empty = true;

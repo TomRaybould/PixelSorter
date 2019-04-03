@@ -66,7 +66,7 @@ class CanvasDrawer {
 
         if(startIndex + 3 >= this.imageData.data.length){
             this.onImageLoaded();
-            setInterval(this.redraw, 10);
+            setInterval(()=>{this.redraw()}, 10);
             return;
         }
         window.setTimeout(this.processPixels, 0);
@@ -78,7 +78,7 @@ class CanvasDrawer {
     }
 
     scramble = () => {
-        const scrambler = new Scrambler(this.pixels, this.swapPixelData, this.redraw, this.onScrambleFinished);
+        const scrambler = new Scrambler(this.pixels, this.swapPixels, this.redraw, this.onScrambleFinished);
         scrambler.scramble();
     }
 
@@ -88,6 +88,7 @@ class CanvasDrawer {
     }
 
     onScrambleFinished = () => {  
+        this.scrambling = false;
         const sorter = this.getSorter();
         sorter.sort(this.pixels);
     } 
@@ -97,17 +98,18 @@ class CanvasDrawer {
     }
 
     swapPixels = (ogIndex, destIndex) => {
+
+        const tempPixel = this.pixels[ogIndex];
+        this.pixels[ogIndex] = this.pixels[destIndex];
+        this.pixels[destIndex] = tempPixel; 
+
         this.drawBuffer.enqueue(ogIndex);
         this.drawBuffer.enqueue(destIndex);
     }
 
     swapPixelData = (ogIndex, destIndex) => {
-        const tempPixel = this.pixels[ogIndex];
-        this.pixels[ogIndex] = this.pixels[destIndex];
-        this.pixels[destIndex] = tempPixel; 
-
-        ogIndex = ogIndex * 4;
-        destIndex = destIndex * 4;
+        ogIndex     = ogIndex * 4;
+        destIndex   = destIndex * 4;
 
         const rawData = this.imageData.data;
         
@@ -129,7 +131,7 @@ class CanvasDrawer {
     }
 
     redraw = () => {
-        const pixelPerFrame = 100;
+        const pixelPerFrame = 1000;
         let count = 0;
         
         while(!this.drawBuffer.isEmpty() && count < pixelPerFrame){

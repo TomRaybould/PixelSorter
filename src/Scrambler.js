@@ -14,15 +14,13 @@ class Scrambler {
             return;
         }
         
-        for(let i = 0; i < 10000; i++){
+        for(let i = 0; i < 1000; i++){
             const index1 = Math.floor(Math.random() * this.pixels.length);
             const index2 = Math.floor(Math.random() * this.pixels.length);
             this.swapPixels(index1, index2);
         }
 
         this.count++;
-
-        this.redraw();
 
         setTimeout(this.scramble, 0);
 
