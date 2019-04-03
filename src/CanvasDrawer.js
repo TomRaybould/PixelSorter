@@ -10,6 +10,7 @@ class CanvasDrawer {
         this.ctx = canvas.getContext('2d');
         this.imageData = [];
         this.pixels = [];
+        this.drawBuffer = [];
     }
 
     drawImage = (onImageLoaded) => {
@@ -76,7 +77,7 @@ class CanvasDrawer {
     }
 
     scramble = () => {
-        const scrambler = new Scrambler(this.pixels, this.swapPixels, this.redraw, this.onScrambleFinished);
+        const scrambler = new Scrambler(this.pixels, this.swapPixelData, this.redraw, this.onScrambleFinished);
         scrambler.scramble();
     }
 
@@ -95,6 +96,11 @@ class CanvasDrawer {
     }
 
     swapPixels = (ogIndex, destIndex) => {
+        this.drawBuffer.push(ogIndex);
+        this.drawBuffer.push(destIndex);
+    }
+
+    swapPixelData = (ogIndex, destIndex) => {
         const tempPixel = this.pixels[ogIndex];
         this.pixels[ogIndex] = this.pixels[destIndex];
         this.pixels[destIndex] = tempPixel; 
@@ -119,10 +125,19 @@ class CanvasDrawer {
         rawData[ogIndex + 1] = tempData[1];
         rawData[ogIndex + 2] = tempData[2];
         rawData[ogIndex + 3] = tempData[3];
-        
     }
 
     redraw = () => {
+        const pixelPerFrame = 100;
+        let count = 0;
+        
+        while(this.drawBuffer.length >= 2 && count < pixelPerFrame){
+            const og = this.drawBuffer.shift();
+            const dest = this.drawBuffer.shift();
+            this.swapPixelData(og, dest);
+            count ++;
+        }
+
         this.ctx.putImageData(this.imageData, 0, 0);
     }
 

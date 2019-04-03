@@ -15,12 +15,12 @@ class PixelHeapSorter{
         for(let i = start; i < arr.length; i++){
             this.siftUp(i, arr);
             
-            if(i % 1000 === 0){
+            if(i % 1 === 10000){
                 const keepBuilding = () => {
                     this.buildMaxHeap(arr, i + 1);
                 }
 
-                setTimeout(keepBuilding, 0);
+                setTimeout(keepBuilding, 100);
                 return;
             }
         
