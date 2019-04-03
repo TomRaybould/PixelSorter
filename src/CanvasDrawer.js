@@ -3,6 +3,7 @@ import Pixel from './Pixel'
 import Scrambler from './Scrambler'
 //import PixelQuickSorter from './PixelQuickSorter'
 import PixelHeapSorter from './PixelHeapSorter'
+import Queue from './Queue'
 
 class CanvasDrawer {
     constructor(canvas){
@@ -10,7 +11,7 @@ class CanvasDrawer {
         this.ctx = canvas.getContext('2d');
         this.imageData = [];
         this.pixels = [];
-        this.drawBuffer = [];
+        this.drawBuffer = new Queue();
     }
 
     drawImage = (onImageLoaded) => {
@@ -96,8 +97,8 @@ class CanvasDrawer {
     }
 
     swapPixels = (ogIndex, destIndex) => {
-        this.drawBuffer.push(ogIndex);
-        this.drawBuffer.push(destIndex);
+        this.drawBuffer.enqueue(ogIndex);
+        this.drawBuffer.enqueue(destIndex);
     }
 
     swapPixelData = (ogIndex, destIndex) => {
@@ -131,9 +132,9 @@ class CanvasDrawer {
         const pixelPerFrame = 100;
         let count = 0;
         
-        while(this.drawBuffer.length >= 2 && count < pixelPerFrame){
-            const og = this.drawBuffer.shift();
-            const dest = this.drawBuffer.shift();
+        while(!this.drawBuffer.isEmpty() && count < pixelPerFrame){
+            const og = this.drawBuffer.dequeue();
+            const dest = this.drawBuffer.dequeue();
             this.swapPixelData(og, dest);
             count ++;
         }
