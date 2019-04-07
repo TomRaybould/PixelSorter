@@ -1,7 +1,7 @@
 
 class Scrambler {
-    constructor(pixels, swapPixels, redraw, onScrambleDone){
-        this.pixels = pixels;
+    constructor(pixelArrLength, swapPixels, redraw, onScrambleDone){
+        this.pixelArrLength = pixelArrLength;
         this.swapPixels = swapPixels;
         this.redraw = redraw;
         this.onScrambleDone = onScrambleDone;
@@ -10,13 +10,16 @@ class Scrambler {
 
     scramble = () => {
         if(this.count > 100){
+            console.log("Scramble done1")
             this.onScrambleDone();
+
+            console.log("Scramble done2")
             return;
         }
         
-        for(let i = 0; i < 1000; i++){
-            const index1 = Math.floor(Math.random() * this.pixels.length);
-            const index2 = Math.floor(Math.random() * this.pixels.length);
+        for(let i = 0; i < 10000; i++){
+            const index1 = Math.floor(Math.random() * this.pixelArrLength);
+            const index2 = Math.floor(Math.random() * this.pixelArrLength);
             this.swapPixels(index1, index2);
         }
 

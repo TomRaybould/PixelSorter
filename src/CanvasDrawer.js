@@ -65,8 +65,8 @@ class CanvasDrawer {
         }
 
         if(startIndex + 3 >= this.imageData.data.length){
-            this.onImageLoaded();
-            setInterval(()=>{this.redraw()}, 10);
+            window.setTimeout(()=>{this.onImageLoaded()}, 10);
+            window.setInterval(()=>{this.redraw()}, 10);
             return;
         }
         window.setTimeout(this.processPixels, 0);
@@ -78,7 +78,7 @@ class CanvasDrawer {
     }
 
     scramble = () => {
-        const scrambler = new Scrambler(this.pixels, this.swapPixels, this.redraw, this.onScrambleFinished);
+        const scrambler = new Scrambler(this.pixels.length, this.swapPixels, this.redraw, this.onScrambleFinished);
         scrambler.scramble();
     }
 
@@ -88,7 +88,6 @@ class CanvasDrawer {
     }
 
     onScrambleFinished = () => {  
-        this.scrambling = false;
         const sorter = this.getSorter();
         sorter.sort(this.pixels);
     } 
@@ -131,7 +130,7 @@ class CanvasDrawer {
     }
 
     redraw = () => {
-        const pixelPerFrame = 1000;
+        const pixelPerFrame = 10000;
         let count = 0;
         
         while(!this.drawBuffer.isEmpty() && count < pixelPerFrame){

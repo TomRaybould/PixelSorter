@@ -45,15 +45,6 @@ class Queue{
         return element;
     }
 
-    print = () => {
-        let ptr = this.front;
-        let string = "";
-        while(ptr != null){
-            console.log(ptr);
-            ptr = ptr.next;
-        }
-    }
-
 }
 
 export default Queue;
