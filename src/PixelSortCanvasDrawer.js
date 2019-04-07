@@ -5,18 +5,22 @@ import PixelHeapSorter from './PixelHeapSorter'
 import Queue from './Queue'
 
 class PixelSortCanvasDrawer {
-    constructor(canvas){
+    constructor(canvas, imageFileUrl, algo, loop){
         this.canvas = canvas;
+        this.imageFileUrl = imageFileUrl;
+        this.algo = algo;
+        this.loop = loop;
         this.ctx = canvas.getContext('2d');
         this.imageData = [];
         this.pixels = [];
         this.drawBuffer = new Queue();
-        this.loop = true;
     }
 
     drawImage = (onImageLoaded) => {
-        this.onImageLoaded = onImageLoaded;
-        const url = 'color_bars.png'
+    
+        if(!this.imageFileUrl){
+            this.imageFileUrl = 'color_bars.png'
+        }
         
         var loadImage = function (url, onImageLoaded) {
             var img = new Image();
@@ -25,7 +29,9 @@ class PixelSortCanvasDrawer {
                 onImageLoaded(img);
             }
         }
-        loadImage(url, this.processImageIntoPixelArray);
+
+        loadImage(this.imageFileUrl, this.processImageIntoPixelArray);
+
     }
 
     processImageIntoPixelArray = (image) => {
@@ -65,7 +71,7 @@ class PixelSortCanvasDrawer {
         }
 
         if(startIndex + 3 >= this.imageData.data.length){
-            this.onImageLoaded();
+            this.scramble();
             window.setTimeout(()=>{this.redraw()}, 10);
             return;
         }
@@ -83,8 +89,12 @@ class PixelSortCanvasDrawer {
     }
 
     getSorter = () => {
-        //return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
-        return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        if(this.algo === 'heapSort'){
+            return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        }
+        else{
+            return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        }
     }
 
     onScrambleFinished = () => {  
@@ -131,7 +141,7 @@ class PixelSortCanvasDrawer {
     }
 
     redraw = () => {
-        const pixelPerFrame = 10000;
+        const pixelPerFrame = 9000;
         let count = 0;
         
         if(this.drawBuffer.getSize() < 500){
