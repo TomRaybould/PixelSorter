@@ -144,7 +144,7 @@ class PixelSortCanvasDrawer {
         const pixelPerFrame = 9000;
         let count = 0;
         
-        if(this.drawBuffer.getSize() < 500){
+        if(this.drawBuffer.getSize() < 100){
             window.setTimeout(()=>{this.redraw()}, 0);
             return;
         }

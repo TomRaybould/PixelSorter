@@ -4,6 +4,7 @@ import PixelSortCanvasDrawer from './PixelSortCanvasDrawer.js'
 class PixelSorter extends Component {
     constructor(props){
         super(props);
+        this.state = {initLoad : true};
         this.imageFileUrl = props.imageFileUrl;
         this.algo = props.algo;
         this.loop = props.loop;
@@ -20,9 +21,15 @@ class PixelSorter extends Component {
     }
 
     render() {
+        if(this.canvasDrawer){
+            this.canvasDrawer.algo = this.props.algo;
+            this.canvasDrawer.loop = this.props.loop;
+        }
+
         return (
-            <canvas ref="canvas" width={100} height={100}/>
+            <canvas ref="canvas"/>
         );
+
     }
 
     scramble = () => {
