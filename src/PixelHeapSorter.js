@@ -6,8 +6,7 @@ class PixelHeapSorter{
     }
 
     sort = (arr) => {
-        this.buildMaxHeap(arr, 0);    
-        this.onPixelsSorted();
+        this.buildMaxHeap(arr, 0);   
     }
 
     buildMaxHeap(arr, start){
@@ -22,17 +21,22 @@ class PixelHeapSorter{
                 setTimeout(keepBuilding, 0);
                 return;
             }
-        
+
         }
         this.heapify(arr, arr.length - 1);
     }
     
 
     heapify = (arr, start) => {
-        for(let i = start; i >= 0 ; i--){
+        for(let i = start; i >= 0; i--){
 
             this.swapPixels(0, i);
             this.siftDown(0, i - 1, arr);
+
+            if(i === 0){
+                this.onPixelsSorted();
+                return;
+            }
 
             if(i % 500 === 0){
                 const keepBuilding = () => {

@@ -12,6 +12,7 @@ class CanvasDrawer {
         this.imageData = [];
         this.pixels = [];
         this.drawBuffer = new Queue();
+        this.looping = true;
     }
 
     drawImage = (onImageLoaded) => {
@@ -83,8 +84,8 @@ class CanvasDrawer {
     }
 
     getSorter = () => {
-        return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
-        //return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        //return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
     }
 
     onScrambleFinished = () => {  
@@ -93,7 +94,10 @@ class CanvasDrawer {
     } 
 
     onPixelsSorted = () => {
-        //this.scramble();
+        console.log("pixels sorted");
+        if(this.looping){
+            this.scramble();
+        }
     }
 
     swapPixels = (ogIndex, destIndex) => {
