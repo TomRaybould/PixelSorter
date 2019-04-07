@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import CanvasDrawer from './CanvasDrawer.js'
+import PixelSortCanvasDrawer from './PixelSortCanvasDrawer.js'
 
-class Canvas extends Component {
+class PixelSorter extends Component {
     componentDidMount() {
         this.updateCanvas()
     }
     updateCanvas() {
         const canvas = this.refs.canvas;
-        this.canvasDrawer = new CanvasDrawer(canvas);
+        this.canvasDrawer = new PixelSortCanvasDrawer(canvas);
 
         this.canvasDrawer.drawImage(this.onImageLoaded);
     }
@@ -30,4 +30,4 @@ class Canvas extends Component {
 
 
 
-export default Canvas;
+export default PixelSorter;

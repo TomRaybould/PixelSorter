@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import Canvas from './Canvas'
+import PixelSorter from './PixelSorter'
 
 class App extends Component {
     render() {
         return (
             <div>
-                <Canvas/>          
+                <PixelSorter/>          
             </div>
         );
     }
