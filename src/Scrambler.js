@@ -10,14 +10,11 @@ class Scrambler {
 
     scramble = () => {
         if(this.count > 100){
-            console.log("Scramble done1")
             this.onScrambleDone();
-
-            console.log("Scramble done2")
             return;
         }
         
-        for(let i = 0; i < 10000; i++){
+        for(let i = 0; i < 5000; i++){
             const index1 = Math.floor(Math.random() * this.pixelArrLength);
             const index2 = Math.floor(Math.random() * this.pixelArrLength);
             this.swapPixels(index1, index2);

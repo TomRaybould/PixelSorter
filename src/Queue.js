@@ -4,15 +4,19 @@ class Queue{
     constructor(){
         this.front = null;
         this.end = null;
-        this.empty = true;
+        this.size = 0;
+    }
+    
+    getSize = () => {
+        return this.size;
     }
 
     isEmpty = () => {
-        return this.empty;
+        return this.size < 1
     }
 
     enqueue = (element) => {
-        this.empty = false;
+        this.size++;
         if(this.front == null){
             this.end = {
                 element : element,
@@ -30,10 +34,10 @@ class Queue{
     }
 
     dequeue = () => {
+        this.size--;
         const element = this.front.element;
 
         if(this.front === this.end){
-            this.empty = true;
             this.front = null;
             this.end = null;
             return element;

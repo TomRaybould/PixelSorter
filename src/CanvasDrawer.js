@@ -65,8 +65,8 @@ class CanvasDrawer {
         }
 
         if(startIndex + 3 >= this.imageData.data.length){
-            window.setTimeout(()=>{this.onImageLoaded()}, 10);
-            window.setInterval(()=>{this.redraw()}, 10);
+            this.onImageLoaded();
+            window.setTimeout(()=>{this.redraw()}, 10);
             return;
         }
         window.setTimeout(this.processPixels, 0);
@@ -133,7 +133,12 @@ class CanvasDrawer {
         const pixelPerFrame = 10000;
         let count = 0;
         
-        while(!this.drawBuffer.isEmpty() && count < pixelPerFrame){
+        if(this.drawBuffer.getSize() < 500){
+            window.setTimeout(()=>{this.redraw()}, 0);
+            return;
+        }
+
+        while(this.drawBuffer.getSize() > 0 && count < pixelPerFrame){
             const og = this.drawBuffer.dequeue();
             const dest = this.drawBuffer.dequeue();
             this.swapPixelData(og, dest);
@@ -141,6 +146,8 @@ class CanvasDrawer {
         }
 
         this.ctx.putImageData(this.imageData, 0, 0);
+
+        window.setTimeout(()=>{this.redraw()}, 10);
     }
 
 }
