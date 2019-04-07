@@ -1,7 +1,7 @@
 
 import Pixel from './Pixel'
 import Scrambler from './Scrambler'
-//import PixelQuickSorter from './PixelQuickSorter'
+import PixelQuickSorter from './PixelQuickSorter'
 import PixelHeapSorter from './PixelHeapSorter'
 import Queue from './Queue'
 
@@ -83,8 +83,8 @@ class CanvasDrawer {
     }
 
     getSorter = () => {
-        //return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
-        return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        //return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
     }
 
     onScrambleFinished = () => {  

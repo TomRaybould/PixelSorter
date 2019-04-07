@@ -1,13 +1,10 @@
 
 class PixelQuickSorter{
     constructor(swapPixels, redraw, onPixelsSorted){
-        const startTime = performance.now();
         this.swapPixels = swapPixels;
         this.redraw = redraw;
         this.onPixelsSorted = onPixelsSorted;
         this.callStackCounter = 0;
-        const duration = performance.now() - startTime;
-        console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
     }
 
     sort = (arr) => {
