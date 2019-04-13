@@ -10,15 +10,16 @@ class PixelHeapSorter{
     }
 
     buildMaxHeap(arr, start){
-
+        
+        let siftUpComparisons = 0;
         for(let i = start; i < arr.length; i++){
-            this.siftUp(i, arr);
-            
-            if(i % 0 === 0){
+            siftUpComparisons += this.siftUp(i, arr);
+
+            if(siftUpComparisons > 100000){
                 const keepBuilding = () => {
                     this.buildMaxHeap(arr, i + 1);
                 }
-                setTimeout(keepBuilding, 0);
+                setTimeout(keepBuilding, 1);
                 return;
             }
 
@@ -26,7 +27,6 @@ class PixelHeapSorter{
         this.heapify(arr, arr.length - 1);
     }
     
-
     heapify = (arr, start) => {
         for(let i = start; i >= 0; i--){
 
@@ -89,19 +89,28 @@ class PixelHeapSorter{
     }
 
     siftUp = (currPos, arr) => {
-        if(currPos === 0){
-            return;
-        }
-        const parentPos = Math.floor((currPos - 1)/2);
-        const current = arr[currPos];
-        const parent = arr[parentPos];
+        let comparisons = 0;
 
-        if(parent.comparedTo(current) <=  0){
-            this.swapPixels(currPos, parentPos);
-            this.siftUp(parentPos, arr);
-            return;
+        if(currPos === 0){
+            return comparisons;
         }
-        
+
+        while(currPos > 0){
+            const parentPos = Math.floor((currPos - 1)/2);
+            const current = arr[currPos];
+            const parent = arr[parentPos];
+            
+            comparisons++;
+
+            if(parent.comparedTo(current) <=  0){
+                this.swapPixels(currPos, parentPos);
+                currPos = parentPos;
+            }
+            else{
+                break;
+            }
+        }
+        return comparisons;
     }
 
     
