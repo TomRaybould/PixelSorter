@@ -15,6 +15,7 @@ class PixelSortCanvasDrawer {
         this.pixels = [];
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
+        this.swapsPerFrameMax = 20000;
     }
 
     drawImage = (onImageLoaded) => {
@@ -109,8 +110,21 @@ class PixelSortCanvasDrawer {
     } 
 
     onPixelsSorted = () => {
-        if(this.loop){
-            this.scramble();
+        
+        this.delayAfterSorting();
+    }
+
+    delayAfterSorting(){
+        if(this.drawBuffer.isEmpty()){
+            if(this.loop){
+                setTimeout(this.scramble, 500);
+            }
+        }
+        else{
+            const checkAgain = () => {
+                this.delayAfterSorting();
+            }
+            setTimeout(checkAgain, 100);
         }
     }
 
@@ -159,7 +173,7 @@ class PixelSortCanvasDrawer {
 
         if(this.drawBuffer.getSize() > 0){
 
-            const limit = Math.min(this.drawBuffer.getSize(), 20000); 
+            const limit = Math.min(this.drawBuffer.getSize(), this.swapsPerFrameMax); 
 
             for(let i = 0; i < limit; i ++){
                 const swapObj = this.drawBuffer.dequeue();
