@@ -15,7 +15,7 @@ class PixelHeapSorter{
         for(let i = start; i < arr.length; i++){
             siftUpComparisons += this.siftUp(i, arr);
 
-            if(siftUpComparisons > 100000){
+            if(siftUpComparisons > 10000){
                 const keepBuilding = () => {
                     this.buildMaxHeap(arr, i + 1);
                 }

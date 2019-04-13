@@ -142,7 +142,7 @@ class PixelSortCanvasDrawer {
     }
 
     redraw = () => {
-        const pixelPerFrame = 8000;
+        const pixelPerFrame = 10000;
         let count = 0;
         
         if(!this.maxBuffer){
@@ -152,7 +152,7 @@ class PixelSortCanvasDrawer {
 
         //console.log(this.maxBuffer);
 
-        while(this.drawBuffer.getSize() > 0 && count < pixelPerFrame){
+        while(this.drawBuffer.getSize() > 200 && count < pixelPerFrame){
             const og = this.drawBuffer.dequeue();
             const dest = this.drawBuffer.dequeue();
             this.swapPixelData(og, dest);
@@ -160,8 +160,7 @@ class PixelSortCanvasDrawer {
         }
 
         this.ctx.putImageData(this.imageData, 0, 0);
-
-        window.setTimeout(()=>{this.redraw()}, 10);
+        requestAnimationFrame(this.redraw);
     }
 
 }
