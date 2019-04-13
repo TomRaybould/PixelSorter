@@ -14,6 +14,7 @@ class PixelSortCanvasDrawer {
         this.imageData = [];
         this.pixels = [];
         this.drawBuffer = new Queue();
+        this.shouldScramble = true;
     }
 
     drawImage = (onImageLoaded) => {
@@ -84,9 +85,13 @@ class PixelSortCanvasDrawer {
     }
 
     scramble = () => {
-        const scrambler = new Scrambler(this.pixels.length, this.swapPixels, this.redraw, this.onScrambleFinished);
-        //scrambler.scramble();
-        this.onScrambleFinished();
+        if(this.scramble){
+            const scrambler = new Scrambler(this.pixels.length, this.swapPixels, this.redraw, this.onScrambleFinished);
+            scrambler.scramble();
+        }
+        else{
+            this.onScrambleFinished();
+        }
     }
 
     getSorter = () => {
@@ -114,11 +119,14 @@ class PixelSortCanvasDrawer {
         this.pixels[ogIndex] = this.pixels[destIndex];
         this.pixels[destIndex] = tempPixel; 
 
-        this.drawBuffer.enqueue(ogIndex);
-        this.drawBuffer.enqueue(destIndex);
+        this.drawBuffer.enqueue({ogIndex, destIndex});
     }
 
-    swapPixelData = (ogIndex, destIndex) => {
+    swapPixelData = (swapObj) => {
+
+        let ogIndex = swapObj.ogIndex;
+        let destIndex = swapObj.destIndex;
+
         ogIndex     = ogIndex * 4;
         destIndex   = destIndex * 4;
 
@@ -142,24 +150,20 @@ class PixelSortCanvasDrawer {
     }
 
     redraw = () => {
-        const pixelPerFrame = 10000;
-        let count = 0;
-        
-        if(!this.maxBuffer){
-            this.maxBuffer = 0; 
+
+        if(this.drawBuffer.getSize() > 0){
+
+            const limit = Math.min(this.drawBuffer.getSize(), 20000); 
+            let count = 0;
+
+            while(count < limit){
+                const swapObj = this.drawBuffer.dequeue();
+                this.swapPixelData(swapObj);
+                count ++;
+            }
+            
+            this.ctx.putImageData(this.imageData, 0, 0);
         }
-        this.maxBuffer = Math.min(this.drawBuffer.getSize(), pixelPerFrame);
-
-        //console.log(this.maxBuffer);
-
-        while(this.drawBuffer.getSize() > 200 && count < pixelPerFrame){
-            const og = this.drawBuffer.dequeue();
-            const dest = this.drawBuffer.dequeue();
-            this.swapPixelData(og, dest);
-            count ++;
-        }
-
-        this.ctx.putImageData(this.imageData, 0, 0);
         requestAnimationFrame(this.redraw);
     }
 

@@ -15,7 +15,7 @@ class PixelHeapSorter{
         for(let i = start; i < arr.length; i++){
             siftUpComparisons += this.siftUp(i, arr);
 
-            if(siftUpComparisons > 10000){
+            if(siftUpComparisons > 20000){
                 const keepBuilding = () => {
                     this.buildMaxHeap(arr, i + 1);
                 }
@@ -28,17 +28,20 @@ class PixelHeapSorter{
     }
     
     heapify = (arr, start) => {
+
+        let heapifyComparisons = 0;
+
         for(let i = start; i >= 0; i--){
 
             this.swapPixels(0, i);
-            this.siftDown(0, i - 1, arr);
+            heapifyComparisons += this.siftDown(0, i - 1, arr);
 
             if(i === 0){
                 this.onPixelsSorted();
                 return;
             }
 
-            if(i % 100 === 0){
+            if(heapifyComparisons > 20000){
                 const keepBuilding = () => {
                     this.heapify(arr, i - 1);
                 }
@@ -53,50 +56,56 @@ class PixelHeapSorter{
 
 
     siftDown = (currPos, endPos, arr) => {
+        let comparisons = 0;
 
-        const parent = arr[currPos];
-        const leftChildPos  = (2 * currPos) + 1;
-        const rightChildPos = (2 * currPos) + 2;
+        while(currPos < arr.length){
+            let parent = arr[currPos];
+            let leftChildPos  = (2 * currPos) + 1;
+            let rightChildPos = (2 * currPos) + 2;
+            
+            comparisons++;
+            if(leftChildPos <= endPos && rightChildPos <= endPos){
+                let leftChild = arr[leftChildPos];
+                let rightChild = arr[rightChildPos];
+                let maxIndex;
 
-        if(leftChildPos <= endPos && rightChildPos <= endPos){
-            const leftChild = arr[leftChildPos];
-            const rightChild = arr[rightChildPos];
-            let maxIndex;
-
-            if(leftChild.comparedTo(rightChild) > 0){
-                maxIndex = leftChildPos;
-            } 
-            else{
-                maxIndex = rightChildPos;
+                comparisons++;
+                if(leftChild.comparedTo(rightChild) > 0){
+                    maxIndex = leftChildPos;
+                } 
+                else{
+                    maxIndex = rightChildPos;
+                }
+                comparisons++;
+                if(arr[maxIndex].comparedTo(parent) > 0){
+                    this.swapPixels(currPos, maxIndex);
+                    currPos = maxIndex;
+                    continue;
+                }
             }
-
-            if(arr[maxIndex].comparedTo(parent) > 0){
-                this.swapPixels(currPos, maxIndex);
-                this.siftDown(maxIndex, endPos, arr);
-                return;
+            
+            comparisons++;
+            if(leftChildPos <= endPos){
+                const leftChild = arr[leftChildPos];   
+                comparisons++;
+                if(leftChild.comparedTo(parent) > 0){
+                    this.swapPixels(currPos, leftChildPos);
+                    currPos = leftChildPos;
+                    continue;
+                }
             }
+            break;
         }
 
-        if(leftChildPos <= endPos){
-            const leftChild = arr[leftChildPos];   
-            if(leftChild.comparedTo(parent) > 0){
-                this.swapPixels(currPos, leftChildPos);
-                this.siftDown(leftChildPos, endPos, arr);
-                return;
-            }
-        }
+        return comparisons;
 
     }
 
     siftUp = (currPos, arr) => {
         let comparisons = 0;
 
-        if(currPos === 0){
-            return comparisons;
-        }
-
         while(currPos > 0){
-            const parentPos = Math.floor((currPos - 1)/2);
+            const parentPos = Math.floor((currPos - 1) / 2);
             const current = arr[currPos];
             const parent = arr[parentPos];
             
