@@ -20,9 +20,10 @@ class App extends Component {
             <div>
                 <PixelSorter
                     //imageFileUrl = 'color_bars.png'
-                    //imageFileUrl = 'giphy.gif'
                     algo = {"heapSort"}
                     loop = {true}
+                    scramble = {true}
+                    delayAfterSorting = {1000}
                 />          
             </div>
         );

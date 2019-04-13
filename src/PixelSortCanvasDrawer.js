@@ -15,10 +15,10 @@ class PixelSortCanvasDrawer {
         this.pixels = [];
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
-        this.swapsPerFrameMax = 20000;
+        this.swapsPerFrameMax = 10000;  
     }
 
-    drawImage = (onImageLoaded) => {
+    drawImage = () => {
     
         if(!this.imageFileUrl){
             this.imageFileUrl = 'color_bars.png'
@@ -110,21 +110,20 @@ class PixelSortCanvasDrawer {
     } 
 
     onPixelsSorted = () => {
-        
-        this.delayAfterSorting();
+        this.waitAfterSorting();
     }
 
-    delayAfterSorting(){
+    waitAfterSorting(){
         if(this.drawBuffer.isEmpty()){
             if(this.loop){
-                setTimeout(this.scramble, 500);
+                setTimeout(this.scramble, this.afterSortDelay);
             }
         }
         else{
             const checkAgain = () => {
-                this.delayAfterSorting();
+                this.waitAfterSorting();
             }
-            setTimeout(checkAgain, 100);
+            setTimeout(checkAgain, 1);
         }
     }
 
@@ -169,7 +168,7 @@ class PixelSortCanvasDrawer {
     }
 
     readFromBuffer = () =>{
-        setTimeout(this.readFromBuffer, 0);
+        requestAnimationFrame(this.readFromBuffer);
 
         if(this.drawBuffer.getSize() > 0){
 

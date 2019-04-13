@@ -14,19 +14,13 @@ class PixelSorter extends Component {
     updateCanvas() {
         const canvas = this.refs.canvas;
         this.canvasDrawer = new PixelSortCanvasDrawer(canvas);
-        this.canvasDrawer.imageFileUrl = this.props.imageFileUrl;
-        this.canvasDrawer.algo = this.props.algo;
-        this.canvasDrawer.loop = this.props.loop;
-        this.canvasDrawer.shouldScramble = this.props.scramble;
+        this.updatePixelSortCanvasDrawer();
         this.canvasDrawer.drawImage();
     }
 
     render() {
         if(this.canvasDrawer){
-            this.canvasDrawer.imageFileUrl = this.props.imageFileUrl;
-            this.canvasDrawer.algo = this.props.algo;
-            this.canvasDrawer.loop = this.props.loop;
-            this.canvasDrawer.shouldScramble = this.props.scramble;
+            this.updatePixelSortCanvasDrawer();
         }
 
         return (
@@ -38,6 +32,14 @@ class PixelSorter extends Component {
     scramble = () => {
         this.canvasDrawer.scramble();
     }
+
+    updatePixelSortCanvasDrawer = () => {
+        this.canvasDrawer.imageFileUrl = this.props.imageFileUrl;
+        this.canvasDrawer.algo = this.props.algo;
+        this.canvasDrawer.loop = this.props.loop;
+        this.canvasDrawer.shouldScramble = this.props.scramble;
+        this.canvasDrawer.delayAfterSorting = this.props.delayAfterSorting;
+    } 
 
 }
 
