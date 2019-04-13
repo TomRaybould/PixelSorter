@@ -73,7 +73,7 @@ class PixelSortCanvasDrawer {
 
         if(startIndex + 3 >= this.imageData.data.length){
             this.scramble();
-            window.setTimeout(()=>{this.redraw()}, 10);
+            this.startRedraw();
             return;
         }
         window.setTimeout(this.processPixels, 0);
@@ -85,7 +85,7 @@ class PixelSortCanvasDrawer {
     }
 
     scramble = () => {
-        if(this.scramble){
+        if(this.shouldScramble){
             const scrambler = new Scrambler(this.pixels.length, this.swapPixels, this.redraw, this.onScrambleFinished);
             scrambler.scramble();
         }
@@ -148,23 +148,31 @@ class PixelSortCanvasDrawer {
         rawData[ogIndex + 2] = tempData[2];
         rawData[ogIndex + 3] = tempData[3];
     }
+    
+    startRedraw(){
+        this.readFromBuffer();
+        this.redraw();
+    }
 
-    redraw = () => {
+    readFromBuffer = () =>{
+        setTimeout(this.readFromBuffer, 0);
 
         if(this.drawBuffer.getSize() > 0){
 
             const limit = Math.min(this.drawBuffer.getSize(), 20000); 
-            let count = 0;
 
-            while(count < limit){
+            for(let i = 0; i < limit; i ++){
                 const swapObj = this.drawBuffer.dequeue();
                 this.swapPixelData(swapObj);
-                count ++;
             }
             
-            this.ctx.putImageData(this.imageData, 0, 0);
         }
+    }
+
+
+    redraw = () => {
         requestAnimationFrame(this.redraw);
+        this.ctx.putImageData(this.imageData, 0, 0);
     }
 
 }
