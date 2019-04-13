@@ -10,9 +10,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        setTimeout(function () {
-            this.setState({algo : ''});
-          }.bind(this), 10000)
+    
     }
     
    
@@ -21,8 +19,9 @@ class App extends Component {
         return (
             <div>
                 <PixelSorter
-                    imageFileUrl = 'color_bars.png'
-                    algo = {this.state.algo}
+                    //imageFileUrl = 'color_bars.png'
+                    //imageFileUrl = 'giphy.gif'
+                    algo = {"heapSort"}
                     loop = {true}
                 />          
             </div>

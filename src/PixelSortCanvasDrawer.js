@@ -85,7 +85,8 @@ class PixelSortCanvasDrawer {
 
     scramble = () => {
         const scrambler = new Scrambler(this.pixels.length, this.swapPixels, this.redraw, this.onScrambleFinished);
-        scrambler.scramble();
+        //scrambler.scramble();
+        this.onScrambleFinished();
     }
 
     getSorter = () => {
@@ -141,13 +142,15 @@ class PixelSortCanvasDrawer {
     }
 
     redraw = () => {
-        const pixelPerFrame = 9000;
+        const pixelPerFrame = 8000;
         let count = 0;
         
-        if(this.drawBuffer.getSize() < 100){
-            window.setTimeout(()=>{this.redraw()}, 0);
-            return;
+        if(!this.maxBuffer){
+            this.maxBuffer = 0; 
         }
+        this.maxBuffer = Math.min(this.drawBuffer.getSize(), pixelPerFrame);
+
+        //console.log(this.maxBuffer);
 
         while(this.drawBuffer.getSize() > 0 && count < pixelPerFrame){
             const og = this.drawBuffer.dequeue();

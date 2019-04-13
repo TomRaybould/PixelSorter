@@ -14,7 +14,7 @@ class PixelHeapSorter{
         for(let i = start; i < arr.length; i++){
             this.siftUp(i, arr);
             
-            if(i % 1000 === 0){
+            if(i % 0 === 0){
                 const keepBuilding = () => {
                     this.buildMaxHeap(arr, i + 1);
                 }
@@ -38,7 +38,7 @@ class PixelHeapSorter{
                 return;
             }
 
-            if(i % 500 === 0){
+            if(i % 100 === 0){
                 const keepBuilding = () => {
                     this.heapify(arr, i - 1);
                 }
