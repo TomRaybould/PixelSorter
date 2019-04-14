@@ -38,7 +38,7 @@ class PixelSorter extends Component {
         this.canvasDrawer.algo = this.props.algo;
         this.canvasDrawer.loop = this.props.loop;
         this.canvasDrawer.shouldScramble = this.props.scramble;
-        this.canvasDrawer.delayAfterSorting = this.props.delayAfterSorting;
+        this.canvasDrawer.afterSortDelay = this.props.afterSortDelay;
     } 
 
 }

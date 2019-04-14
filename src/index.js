@@ -19,11 +19,11 @@ class App extends Component {
         return (
             <div>
                 <PixelSorter
-                    //imageFileUrl = 'color_bars.png'
+                    imageFileUrl = 'pixel-sorter-logo.png'
                     algo = {"heapSort"}
                     loop = {true}
                     scramble = {true}
-                    delayAfterSorting = {1000}
+                    afterSortDelay = {1000}
                 />          
             </div>
         );
