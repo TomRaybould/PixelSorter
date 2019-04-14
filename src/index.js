@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import PixelSorter from './PixelSorter'
+import PixelSorter from './pixel-sorter-component/PixelSorter'
 
 class App extends Component {
 
