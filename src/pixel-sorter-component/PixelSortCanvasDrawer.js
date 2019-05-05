@@ -168,7 +168,6 @@ class PixelSortCanvasDrawer {
     }
 
     readFromBuffer = () =>{
-        requestAnimationFrame(this.readFromBuffer);
 
         if(this.drawBuffer.getSize() > 0){
 
@@ -180,12 +179,13 @@ class PixelSortCanvasDrawer {
             }
             
         }
+        setTimeout(this.readFromBuffer, 5);
     }
 
 
     redraw = () => {
-        requestAnimationFrame(this.redraw);
         this.ctx.putImageData(this.imageData, 0, 0);
+        requestAnimationFrame(this.redraw);
     }
 
 }
