@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import PixelSortCanvasDrawer from './PixelSortCanvasDrawer.js'
+import PixelSortCanvasDrawer from './PixelSortCanvasDrawer.js';
+import './PixelSorter.css';
 
 class PixelSorter extends Component {
     constructor(props){
@@ -7,13 +8,20 @@ class PixelSorter extends Component {
         this.state = {initLoad : true};
     }
 
+    resize = () => {
+        if(this.canvas){
+            this.canvas.style.width = '80%';
+        }
+    }
+
+
     componentDidMount() {
         this.updateCanvas();
     }
         
     updateCanvas() {
-        const canvas = this.refs.canvas;
-        this.canvasDrawer = new PixelSortCanvasDrawer(canvas);
+        this.canvas = this.refs.canvas;
+        this.canvasDrawer = new PixelSortCanvasDrawer(this.canvas);
         this.updatePixelSortCanvasDrawer();
         this.canvasDrawer.drawImage();
     }
@@ -24,7 +32,9 @@ class PixelSorter extends Component {
         }
 
         return (
-            <canvas ref="canvas"/>
+            <div className="pixel-sorter">
+                <canvas ref="canvas" className="canvas"/>
+            </div>
         );
 
     }
