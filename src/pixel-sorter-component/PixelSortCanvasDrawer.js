@@ -17,6 +17,7 @@ class PixelSortCanvasDrawer {
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
         this.swapsPerFrameMax = 10000;  
+        this.pixelWidth = 2;
     }
 
     drawImage = () => {
@@ -49,36 +50,28 @@ class PixelSortCanvasDrawer {
     }
 
     processPixels = () => {
-
-        let startIndex = this.pixels.length ? this.pixels.length : 0;
         
-        startIndex = startIndex * 4;
+        const width = this.imageData.width;
+        const height = this.imageData.height;
+    
+        for(let i = 0; i < height; i += this.pixelWidth){
+            for(let j = 0; j < width; j += this.pixelWidth){
+                
+                const numPerRow = width / this.pixelWidth;
+                let pos = numPerRow * (i === 0 ? 0 : i / this.pixelWidth);
+                const posInRow = j === 0 ? 0 : j / this.pixelWidth;
+                pos = pos + posInRow;
 
-        const sectionLength = startIndex + (1000 * 4);
-
-        for(let i = startIndex; i < sectionLength; i += 4){
-            startIndex = i;
-
-            if(startIndex + 3 > this.imageData.data.length){
-                break;
+                const pixel = new Pixel();
+                pixel.truePosition      = pos;
+                pixel.currentPosition   = pos;
+                this.pixels.push(pixel);
             }
-
-            const pixelPosition = i;
-            const pixel = new Pixel();
-            
-            pixel.truePosition      = pixelPosition;
-            pixel.currentPosition   = pixelPosition;
-            
-            this.pixels.push(pixel);
-            
         }
 
-        if(startIndex + 3 >= this.imageData.data.length){
-            this.scramble();
-            this.startRedraw();
-            return;
-        }
-        window.setTimeout(this.processPixels, 0);
+        this.scramble();
+        this.startRedraw();
+
     }
 
     resizeCanvas = (width, height) => {
@@ -131,23 +124,44 @@ class PixelSortCanvasDrawer {
         }
     }
 
+<<<<<<< HEAD
     swapPixels = (ogIndex, destIndex, log) => {
        
         const tempPixel = this.pixels[ogIndex];
         this.pixels[ogIndex] = this.pixels[destIndex];
         this.pixels[destIndex] = tempPixel;
+=======
+    swapPixels = (ogIndex, destIndex) => {
+        const tempPixel         = this.pixels[ogIndex];
+        this.pixels[ogIndex]    = this.pixels[destIndex];
+        this.pixels[destIndex]  = tempPixel;
+>>>>>>> Sorting every other pixel
 
         this.drawBuffer.enqueue({ogIndex, destIndex});
     }
 
+    convertRelativePosToArrIndex = (pos) => {
+        const adjustedWidth = Math.floor(this.imageData.width / this.pixelWidth);
+
+        const rowNum = Math.floor(pos / adjustedWidth);
+        const colNum = Math.floor(pos % adjustedWidth);
+
+        const pixelsPerRow = this.imageData.width;
+
+        return ((rowNum * pixelsPerRow) + (colNum)) * this.pixelWidth * 4;
+    }
+
     swapPixelData = (swapObj) => {
 
-        let ogIndex = swapObj.ogIndex;
-        let destIndex = swapObj.destIndex;
+        let ogIndex     = swapObj.ogIndex;
+        let destIndex   = swapObj.destIndex;
 
-        ogIndex     = ogIndex * 4;
-        destIndex   = destIndex * 4;
+        ogIndex     = this.convertRelativePosToArrIndex(ogIndex);
+        destIndex   = this.convertRelativePosToArrIndex(destIndex);
 
+        if(ogIndex > this.imageData.data.length){
+            console.log("over"+ ogIndex);
+        }
         const rawData = this.imageData.data;
         
         const tempData = [];
