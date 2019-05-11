@@ -124,18 +124,10 @@ class PixelSortCanvasDrawer {
         }
     }
 
-<<<<<<< HEAD
-    swapPixels = (ogIndex, destIndex, log) => {
-       
-        const tempPixel = this.pixels[ogIndex];
-        this.pixels[ogIndex] = this.pixels[destIndex];
-        this.pixels[destIndex] = tempPixel;
-=======
     swapPixels = (ogIndex, destIndex) => {
         const tempPixel         = this.pixels[ogIndex];
         this.pixels[ogIndex]    = this.pixels[destIndex];
         this.pixels[destIndex]  = tempPixel;
->>>>>>> Sorting every other pixel
 
         this.drawBuffer.enqueue({ogIndex, destIndex});
     }
