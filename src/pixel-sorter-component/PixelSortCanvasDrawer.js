@@ -17,11 +17,10 @@ class PixelSortCanvasDrawer {
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
         this.swapsPerFrameMax = 10000;  
-        this.pixelWidth = 20;
+        this.pixelWidth = 4;
     }
 
     drawImage = () => {
-    
         if(!this.imageFileUrl){
             this.imageFileUrl = 'color_bars.png'
         }
@@ -53,6 +52,10 @@ class PixelSortCanvasDrawer {
         
         const width = this.imageData.width;
         const height = this.imageData.height;
+
+
+        console.log(width);
+        console.log(height);
     
         for(let i = 0; i < height; i += this.pixelWidth){
             for(let j = 0; j < width; j += this.pixelWidth){
@@ -63,8 +66,7 @@ class PixelSortCanvasDrawer {
                 pos = pos + posInRow;
 
                 const pixel = new Pixel();
-                pixel.truePosition      = pos;
-                pixel.currentPosition   = pos;
+                pixel.truePosition = pos;
                 this.pixels.push(pixel);
             }
         }
@@ -143,34 +145,57 @@ class PixelSortCanvasDrawer {
         return ((rowNum * pixelsPerRow) + (colNum)) * this.pixelWidth * 4;
     }
 
+    getPixelSectionIndexes = (arrPos) => {
+        const result = [];
+        
+        const adjustedWidth = Math.floor(this.imageData.width);
+        const indexesPerRow = adjustedWidth * 4;
+        
+        for(let row = 0; row < 1; row++){
+            for(let col = 0; col < 1; col++){
+                let pos = (indexesPerRow * (row)) + arrPos;
+                pos += (col * 4);
+                result.push(pos);
+            }
+        }
+        return result;
+    }
+
     swapPixelData = (swapObj) => {
 
         let ogIndex     = swapObj.ogIndex;
         let destIndex   = swapObj.destIndex;
+        
+        if(ogIndex % 4 !== 0){
+            console.log(ogIndex);
+        }
 
         ogIndex     = this.convertRelativePosToArrIndex(ogIndex);
         destIndex   = this.convertRelativePosToArrIndex(destIndex);
 
-        if(ogIndex > this.imageData.data.length){
-            console.log("over"+ ogIndex);
-        }
         const rawData = this.imageData.data;
         
-        const tempData = [];
-        tempData[0] = rawData[destIndex];
-        tempData[1] = rawData[destIndex + 1];
-        tempData[2] = rawData[destIndex + 2];
-        tempData[3] = rawData[destIndex + 3];
+        const ogIndexes = this.getPixelSectionIndexes(ogIndex);
+        const destIndexes = this.getPixelSectionIndexes(destIndex);
 
-        rawData[destIndex]     = rawData[ogIndex];
-        rawData[destIndex + 1] = rawData[ogIndex + 1];
-        rawData[destIndex + 2] = rawData[ogIndex + 2];
-        rawData[destIndex + 3] = rawData[ogIndex + 3];
+        for(let i = 0; i < ogIndexes.length; i++){
+            
+            const tempData = [];
+            tempData[0] = rawData[destIndexes[i]];
+            tempData[1] = rawData[destIndexes[i] + 1];
+            tempData[2] = rawData[destIndexes[i] + 2];
+            tempData[3] = rawData[destIndexes[i] + 3];
 
-        rawData[ogIndex]     = tempData[0];
-        rawData[ogIndex + 1] = tempData[1];
-        rawData[ogIndex + 2] = tempData[2];
-        rawData[ogIndex + 3] = tempData[3];
+            rawData[destIndex[i]]     = rawData[ogIndexes[i]];
+            rawData[destIndex[i] + 1] = rawData[ogIndexes[i] + 1];
+            rawData[destIndex[i] + 2] = rawData[ogIndexes[i] + 2];
+            rawData[destIndex[i] + 3] = rawData[ogIndexes[i] + 3];
+
+            rawData[ogIndexes[i]]     = tempData[0];
+            rawData[ogIndexes[i] + 1] = tempData[1];
+            rawData[ogIndexes[i] + 2] = tempData[2];
+            rawData[ogIndexes[i] + 3] = tempData[3];
+        }
     }
     
     startRedraw(){
