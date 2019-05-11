@@ -3,6 +3,7 @@ import Scrambler from './Scrambler'
 import PixelQuickSorter from './PixelQuickSorter'
 import PixelHeapSorter from './PixelHeapSorter'
 import Queue from './Queue'
+import InstantSorter from './InstantSorter';
 
 class PixelSortCanvasDrawer {
     constructor(canvas, imageFileUrl, algo, loop){
@@ -99,8 +100,11 @@ class PixelSortCanvasDrawer {
         if(this.algo === 'heapSort'){
             return new PixelHeapSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
         }
-        else{
+        else if (this.algo === 'quickSort'){
             return new PixelQuickSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
+        }
+        else{
+            return new InstantSorter(this.swapPixels, this.redraw, this.onPixelsSorted);
         }
     }
 
@@ -127,10 +131,11 @@ class PixelSortCanvasDrawer {
         }
     }
 
-    swapPixels = (ogIndex, destIndex) => {
+    swapPixels = (ogIndex, destIndex, log) => {
+       
         const tempPixel = this.pixels[ogIndex];
         this.pixels[ogIndex] = this.pixels[destIndex];
-        this.pixels[destIndex] = tempPixel; 
+        this.pixels[destIndex] = tempPixel;
 
         this.drawBuffer.enqueue({ogIndex, destIndex});
     }

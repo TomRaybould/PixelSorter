@@ -8,7 +8,7 @@ class Logo extends Component {
             <div className="logo">
                 <PixelSorter
                     imageFileUrl = 'pixel-sorter-logo.png'
-                    algo = {"quickSort"}
+                    algo = "quicksort"
                     loop = {true}
                     scramble = {true}
                     afterSortDelay = {1000}/>          
