@@ -15,8 +15,8 @@ class PixelSortCanvasDrawer {
         this.pixels = [];
         this.drawBuffer = new Queue();
         this.shouldScramble = true;  
-        this.pixelWidth = 5;
-        this.pixelHeight = 4;
+        this.pixelWidth = 1;
+        this.pixelHeight = 1;
     }
 
     drawImage = () => {
