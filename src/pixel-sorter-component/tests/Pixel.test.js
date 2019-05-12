@@ -7,8 +7,6 @@ test('pixel comparedTo method', () => {
     const pixel2 = new Pixel();
     pixel2.truePosition = 0;
 
-    console.log(pixel1);
-
     expect(pixel1.comparedTo(pixel2)).toBe(0);
     
     pixel1.truePosition = 1;

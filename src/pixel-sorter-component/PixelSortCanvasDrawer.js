@@ -11,7 +11,6 @@ class PixelSortCanvasDrawer {
         this.imageFileUrl = imageFileUrl;
         this.algo = algo;
         this.loop = loop;
-        this.ctx = canvas.getContext('2d');
         this.imageData = [];
         this.pixels = [];
         this.drawBuffer = new Queue();
@@ -39,6 +38,7 @@ class PixelSortCanvasDrawer {
 
     processImageIntoPixelArray = (image) => {
         this.resizeCanvas(image.width, image.height);
+        this.ctx = this.canvas.getContext('2d');
         this.ctx.drawImage(image, 0, 0);
         
         const imageData = this.ctx.getImageData(0, 0, image.width, image.height);
@@ -52,10 +52,6 @@ class PixelSortCanvasDrawer {
         
         const width = this.imageData.width;
         const height = this.imageData.height;
-
-
-        console.log(width);
-        console.log(height);
     
         for(let i = 0; i < height; i += this.pixelWidth){
             for(let j = 0; j < width; j += this.pixelWidth){
