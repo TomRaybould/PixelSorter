@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Logo from './Logo'
-import Container from './Container';
+import './Container.css'
 
-class App extends Component {
+class Container extends Component {
 
     constructor(props){
         super(props);
@@ -17,11 +17,11 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <Container/>       
+            <div className="container">
+                <Logo/>          
             </div>
         );
     }
 }
 
-export default App;
+export default Container;

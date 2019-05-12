@@ -12,7 +12,7 @@ class Logo extends Component {
                     loop = {true}
                     scramble = {true}
                     pixelWidth = {2}
-                    pixelHeight = {84}
+                    pixelHeight = {2}
                     afterSortDelay = {1000}/>          
             </div>
         );
