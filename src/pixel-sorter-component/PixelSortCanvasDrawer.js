@@ -16,12 +16,13 @@ class PixelSortCanvasDrawer {
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
         this.swapsPerFrameMax = 10000;  
-        this.pixelWidth = 3;
+        this.pixelWidth = 5;
+        this.pixelHeight = 4;
     }
 
     drawImage = () => {
         if(!this.imageFileUrl){
-            this.imageFileUrl = 'color_bars.png'
+            this.imageFileUrl = 'pixel-sorter-logo.png'
         }
         
         var loadImage = function (url, onImageLoaded) {
@@ -70,7 +71,7 @@ class PixelSortCanvasDrawer {
     }
 
     getPixelBlockPerCol = () =>{
-        return Math.floor(this.imageData.height / this.pixelWidth);
+        return Math.floor(this.imageData.height / this.pixelHeight);
     }
 
     resizeCanvas = (width, height) => {
@@ -139,7 +140,7 @@ class PixelSortCanvasDrawer {
         const rowNum = Math.floor(pos / this.getPixelBlockPerRow());
         const colNum = Math.floor(pos % this.getPixelBlockPerRow());    
 
-        const rowPixels = rowNum * pixelsPerRow * this.pixelWidth;
+        const rowPixels = rowNum * pixelsPerRow * this.pixelHeight;
         const colPixels = colNum * this.pixelWidth;
 
         return ((rowPixels) + (colPixels)) * 4;
@@ -151,7 +152,7 @@ class PixelSortCanvasDrawer {
         const pixelPerRow = this.imageData.width;
         const indexesPerRow = pixelPerRow * 4;
         
-        for(let row = 0; row < this.pixelWidth; row++){
+        for(let row = 0; row < this.pixelHeight; row++){
             for(let col = 0; col < this.pixelWidth; col++){
                 let pos = (indexesPerRow * (row)) + arrPos;
                 pos += (col * 4);

@@ -5,6 +5,7 @@ test('Process Pixels', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.pixelWidth = 10;
+    pixelSortCanvasDrawer.pixelHeight = 10;
     pixelSortCanvasDrawer.imageData.width = 100;
     pixelSortCanvasDrawer.imageData.height = 100;
 
@@ -20,10 +21,11 @@ test('Process Pixels', () => {
 
 });
 
-test('Irregular Process Pixels', () => {
+test('Irregular image Process Pixels', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.pixelWidth = 20;
+    pixelSortCanvasDrawer.pixelHeight = 20;
     pixelSortCanvasDrawer.imageData.width = 104;
     pixelSortCanvasDrawer.imageData.height = 102;
 
@@ -39,10 +41,31 @@ test('Irregular Process Pixels', () => {
 
 });
 
+test('Irregular Pixel size Process Pixels', () => {
+    const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
+
+    pixelSortCanvasDrawer.pixelWidth = 20;
+    pixelSortCanvasDrawer.pixelHeight = 10;
+    pixelSortCanvasDrawer.imageData.width = 104;
+    pixelSortCanvasDrawer.imageData.height = 102;
+
+    pixelSortCanvasDrawer.scramble = () => {}
+    pixelSortCanvasDrawer.startRedraw = () => {}
+    pixelSortCanvasDrawer.processPixels();
+    
+    expect(pixelSortCanvasDrawer.pixels.length).toBe(50);
+
+    pixelSortCanvasDrawer.pixels.forEach(((pixel, index) => {
+        expect(pixel.truePosition).toBe(index);
+    }));
+
+});
+
 test('convertPixelBlockPosToArrIndex', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.pixelWidth = 10;
+    pixelSortCanvasDrawer.pixelHeight = 10;
     pixelSortCanvasDrawer.imageData.width = 100;
     pixelSortCanvasDrawer.imageData.height = 100;
     
@@ -64,10 +87,11 @@ test('convertPixelBlockPosToArrIndex', () => {
 
 });
 
-test('convertPixelBlockPosToArrIndex Irregular', () => {
+test('convertPixelBlockPosToArrIndex Irregular image', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.pixelWidth = 25;
+    pixelSortCanvasDrawer.pixelHeight = 25;
     pixelSortCanvasDrawer.imageData.width = 104;
     pixelSortCanvasDrawer.imageData.height = 104;
     
@@ -81,11 +105,31 @@ test('convertPixelBlockPosToArrIndex Irregular', () => {
 });
 
 
+test('convertPixelBlockPosToArrIndex Irregular pixel size', () => {
+    const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
+
+    pixelSortCanvasDrawer.pixelWidth = 20;
+    pixelSortCanvasDrawer.pixelHeight = 30;
+    
+    pixelSortCanvasDrawer.imageData.width = 104;
+    pixelSortCanvasDrawer.imageData.height = 104;
+    
+    let pixelBlockPos = 13;
+    let expectedArrPos = 25200;
+
+    let actualArrPos = pixelSortCanvasDrawer.convertPixelBlockPosToArrIndex(pixelBlockPos);
+    
+    expect(actualArrPos).toBe(expectedArrPos);
+
+});
+
+
 
 test('Swap Pixel Data', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.pixelWidth = 1;
+    pixelSortCanvasDrawer.pixelHeight = 1;
     pixelSortCanvasDrawer.imageData.width = 10;
 
     const pixelArr = [];
@@ -115,6 +159,7 @@ test('Indexes In section', () => {
 
     pixelSortCanvasDrawer.imageData.width = 100;
     pixelSortCanvasDrawer.pixelWidth = 5;
+    pixelSortCanvasDrawer.pixelHeight = 5;
 
     let actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
 
@@ -130,6 +175,7 @@ test('Indexes In section', () => {
     expect(actualResults).toEqual(expectedResults);
     
     pixelSortCanvasDrawer.pixelWidth = 1;
+    pixelSortCanvasDrawer.pixelHeight = 1;
 
     actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
     
@@ -139,12 +185,13 @@ test('Indexes In section', () => {
 
 });
 
-test('Indexes In section irregular', () => {
+test('Indexes In section irregular image', () => {
     
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.imageData.width = 104;
     pixelSortCanvasDrawer.pixelWidth = 5;
+    pixelSortCanvasDrawer.pixelHeight = 5;
 
     let actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
 
@@ -160,6 +207,40 @@ test('Indexes In section irregular', () => {
     expect(actualResults).toEqual(expectedResults);
     
     pixelSortCanvasDrawer.pixelWidth = 1;
+    pixelSortCanvasDrawer.pixelHeight = 1;
+
+    actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
+    
+    expectedResults = [40]
+
+    expect(actualResults).toEqual(expectedResults);
+
+});
+
+test('Indexes In section irregular Pixel size', () => {
+    
+    const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
+
+    pixelSortCanvasDrawer.imageData.width = 104;
+    pixelSortCanvasDrawer.pixelWidth = 5;
+    pixelSortCanvasDrawer.pixelHeight = 6;
+
+    let actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
+
+    let expectedResults = 
+    [   
+        40,     44,     48,     52,     56,
+        456,    460,    464,    468,    472,
+        872,    876,    880,    884,    888,
+        1288,   1292,   1296,   1300,   1304,
+        1704,   1708,   1712,   1716,   1720,
+        2120,   2124,   2128,   2132,   2136
+    ]
+
+    expect(actualResults).toEqual(expectedResults);
+    
+    pixelSortCanvasDrawer.pixelWidth = 1;
+    pixelSortCanvasDrawer.pixelHeight = 1;
 
     actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
     
