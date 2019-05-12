@@ -16,7 +16,7 @@ class PixelSortCanvasDrawer {
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
         this.swapsPerFrameMax = 10000;  
-        this.pixelWidth = 4;
+        this.pixelWidth = 2;
     }
 
     drawImage = () => {

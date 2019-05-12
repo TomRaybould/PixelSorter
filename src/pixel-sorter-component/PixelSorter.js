@@ -8,13 +8,6 @@ class PixelSorter extends Component {
         this.state = {initLoad : true};
     }
 
-    resize = () => {
-        if(this.canvas){
-            this.canvas.style.width = '80%';
-        }
-    }
-
-
     componentDidMount() {
         this.updateCanvas();
     }
