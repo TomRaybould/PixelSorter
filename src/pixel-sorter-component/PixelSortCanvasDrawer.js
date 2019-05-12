@@ -16,7 +16,7 @@ class PixelSortCanvasDrawer {
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
         this.swapsPerFrameMax = 10000;  
-        this.pixelWidth = 2;
+        this.pixelWidth = 10;
     }
 
     drawImage = () => {
@@ -49,27 +49,28 @@ class PixelSortCanvasDrawer {
     }
 
     processPixels = () => {
-        
-        const width = this.imageData.width;
-        const height = this.imageData.height;
+        const width = this.getPixelBlockPerRow();
+        const height = this.getPixelBlockPerCol();
     
-        for(let i = 0; i < height; i += this.pixelWidth){
-            for(let j = 0; j < width; j += this.pixelWidth){
-                
-                const numPerRow = width / this.pixelWidth;
-                let pos = numPerRow * (i === 0 ? 0 : i / this.pixelWidth);
-                const posInRow = j === 0 ? 0 : j / this.pixelWidth;
-                pos = pos + posInRow;
+        const pixelArrLength = width * height;
 
-                const pixel = new Pixel();
-                pixel.truePosition = pos;
-                this.pixels.push(pixel);
-            }
+        for(let i = 0; i < pixelArrLength; i++){
+            const pixel = new Pixel();
+            pixel.truePosition = i;
+            this.pixels.push(pixel);
         }
-
+        
         this.scramble();
         this.startRedraw();
 
+    }
+
+    getPixelBlockPerRow = () =>{
+        return Math.floor(this.imageData.width / this.pixelWidth);
+    }
+
+    getPixelBlockPerCol = () =>{
+        return Math.floor(this.imageData.height / this.pixelWidth);
     }
 
     resizeCanvas = (width, height) => {
@@ -131,7 +132,7 @@ class PixelSortCanvasDrawer {
     }
 
     convertPixelBlockPosToArrIndex = (pos) => {
-        const pixelsPerRow = Math.floor(this.imageData.width / this.pixelWidth);
+        const pixelsPerRow = this.getPixelBlockPerRow();
 
         const rowNum = Math.floor(pos / pixelsPerRow);
         const colNum = Math.floor(pos % pixelsPerRow);    
@@ -146,7 +147,7 @@ class PixelSortCanvasDrawer {
     getPixelSectionIndexes = (arrPos) => {
         const result = [];
         
-        const adjustedWidth = Math.floor(this.imageData.width);
+        const adjustedWidth = this.getPixelBlockPerRow() * this.pixelWidth;
         const indexesPerRow = adjustedWidth * 4;
         
         for(let row = 0; row < this.pixelWidth; row++){
