@@ -149,8 +149,8 @@ class PixelSortCanvasDrawer {
         const adjustedWidth = Math.floor(this.imageData.width);
         const indexesPerRow = adjustedWidth * 4;
         
-        for(let row = 0; row < 1; row++){
-            for(let col = 0; col < 1; col++){
+        for(let row = 0; row < this.pixelWidth; row++){
+            for(let col = 0; col < this.pixelWidth; col++){
                 let pos = (indexesPerRow * (row)) + arrPos;
                 pos += (col * 4);
                 result.push(pos);
@@ -163,10 +163,6 @@ class PixelSortCanvasDrawer {
 
         let ogIndex     = swapObj.ogIndex;
         let destIndex   = swapObj.destIndex;
-        
-        if(ogIndex % 4 !== 0){
-            console.log(ogIndex);
-        }
 
         ogIndex     = this.convertPixelBlockPosToArrIndex(ogIndex);
         destIndex   = this.convertPixelBlockPosToArrIndex(destIndex);
@@ -175,7 +171,7 @@ class PixelSortCanvasDrawer {
         
         const ogIndexes = this.getPixelSectionIndexes(ogIndex);
         const destIndexes = this.getPixelSectionIndexes(destIndex);
-
+        
         for(let i = 0; i < ogIndexes.length; i++){
             
             const tempData = [];
@@ -183,11 +179,11 @@ class PixelSortCanvasDrawer {
             tempData[1] = rawData[destIndexes[i] + 1];
             tempData[2] = rawData[destIndexes[i] + 2];
             tempData[3] = rawData[destIndexes[i] + 3];
-
-            rawData[destIndex[i]]     = rawData[ogIndexes[i]];
-            rawData[destIndex[i] + 1] = rawData[ogIndexes[i] + 1];
-            rawData[destIndex[i] + 2] = rawData[ogIndexes[i] + 2];
-            rawData[destIndex[i] + 3] = rawData[ogIndexes[i] + 3];
+        
+            rawData[destIndexes[i]]     = rawData[ogIndexes[i]];
+            rawData[destIndexes[i] + 1] = rawData[ogIndexes[i] + 1];
+            rawData[destIndexes[i] + 2] = rawData[ogIndexes[i] + 2];
+            rawData[destIndexes[i] + 3] = rawData[ogIndexes[i] + 3];
 
             rawData[ogIndexes[i]]     = tempData[0];
             rawData[ogIndexes[i] + 1] = tempData[1];
