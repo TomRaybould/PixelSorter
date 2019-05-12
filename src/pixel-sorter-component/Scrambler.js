@@ -9,12 +9,12 @@ class Scrambler {
     }
 
     scramble = () => {
-        if(this.count > 100){
+        if(this.count > 3){
             this.onScrambleDone();
             return;
         }
         
-        for(let i = 0; i < 1000; i++){
+        for(let i = 0; i < this.pixelArrLength; i++){
             const index1 = Math.floor(Math.random() * this.pixelArrLength);
             const index2 = Math.floor(Math.random() * this.pixelArrLength);
             this.swapPixels(index1, index2);
@@ -22,7 +22,7 @@ class Scrambler {
 
         this.count++;
 
-        setTimeout(this.scramble, 100);
+        setTimeout(this.scramble, 0);
 
     }
 
