@@ -16,7 +16,7 @@ class PixelSortCanvasDrawer {
         this.drawBuffer = new Queue();
         this.shouldScramble = true;
         this.swapsPerFrameMax = 10000;  
-        this.pixelWidth = 10;
+        this.pixelWidth = 3;
     }
 
     drawImage = () => {
@@ -132,13 +132,14 @@ class PixelSortCanvasDrawer {
     }
 
     convertPixelBlockPosToArrIndex = (pos) => {
-        const pixelsPerRow = this.getPixelBlockPerRow();
+        let pixelsPerRow = this.getPixelBlockPerRow() * this.pixelWidth;
+        let leftOver = this.imageData.width - pixelsPerRow;
+        pixelsPerRow += leftOver;
 
-        const rowNum = Math.floor(pos / pixelsPerRow);
-        const colNum = Math.floor(pos % pixelsPerRow);    
+        const rowNum = Math.floor(pos / this.getPixelBlockPerRow());
+        const colNum = Math.floor(pos % this.getPixelBlockPerRow());    
 
-        
-        const rowPixels = rowNum * pixelsPerRow * this.pixelWidth * this.pixelWidth;
+        const rowPixels = rowNum * pixelsPerRow * this.pixelWidth;
         const colPixels = colNum * this.pixelWidth;
 
         return ((rowPixels) + (colPixels)) * 4;
@@ -147,8 +148,8 @@ class PixelSortCanvasDrawer {
     getPixelSectionIndexes = (arrPos) => {
         const result = [];
         
-        const adjustedWidth = this.getPixelBlockPerRow() * this.pixelWidth;
-        const indexesPerRow = adjustedWidth * 4;
+        const pixelPerRow = this.imageData.width;
+        const indexesPerRow = pixelPerRow * 4;
         
         for(let row = 0; row < this.pixelWidth; row++){
             for(let col = 0; col < this.pixelWidth; col++){
@@ -157,6 +158,7 @@ class PixelSortCanvasDrawer {
                 result.push(pos);
             }
         }
+
         return result;
     }
 

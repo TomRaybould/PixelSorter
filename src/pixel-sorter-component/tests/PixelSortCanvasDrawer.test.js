@@ -43,8 +43,8 @@ test('convertPixelBlockPosToArrIndex', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
     pixelSortCanvasDrawer.pixelWidth = 10;
-    pixelSortCanvasDrawer.imageData.width = 104;
-    pixelSortCanvasDrawer.imageData.height = 104;
+    pixelSortCanvasDrawer.imageData.width = 100;
+    pixelSortCanvasDrawer.imageData.height = 100;
     
     let pixelBlockPos = 12;
     let expectedArrPos = 1020 * 4;
@@ -72,7 +72,7 @@ test('convertPixelBlockPosToArrIndex Irregular', () => {
     pixelSortCanvasDrawer.imageData.height = 104;
     
     let pixelBlockPos = 13;
-    let expectedArrPos = 30100;
+    let expectedArrPos = 31300;
 
     let actualArrPos = pixelSortCanvasDrawer.convertPixelBlockPosToArrIndex(pixelBlockPos);
     
@@ -113,7 +113,7 @@ test('Indexes In section', () => {
     
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
 
-    pixelSortCanvasDrawer.imageData.width = 104;
+    pixelSortCanvasDrawer.imageData.width = 100;
     pixelSortCanvasDrawer.pixelWidth = 5;
 
     let actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
@@ -125,6 +125,36 @@ test('Indexes In section', () => {
         840,    844,    848,    852,    856,
         1240,   1244,   1248,   1252,   1256,
         1640,   1644,   1648,   1652,   1656
+    ]
+
+    expect(actualResults).toEqual(expectedResults);
+    
+    pixelSortCanvasDrawer.pixelWidth = 1;
+
+    actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
+    
+    expectedResults = [40]
+
+    expect(actualResults).toEqual(expectedResults);
+
+});
+
+test('Indexes In section irregular', () => {
+    
+    const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
+
+    pixelSortCanvasDrawer.imageData.width = 104;
+    pixelSortCanvasDrawer.pixelWidth = 5;
+
+    let actualResults = pixelSortCanvasDrawer.getPixelSectionIndexes(40);
+
+    let expectedResults = 
+    [   
+        40,     44,     48,     52,     56,
+        456,    460,    464,    468,    472,
+        872,    876,    880,    884,    888,
+        1288,   1292,   1296,   1300,   1304,
+        1704,   1708,   1712,   1716,   1720
     ]
 
     expect(actualResults).toEqual(expectedResults);
