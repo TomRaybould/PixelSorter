@@ -60,7 +60,7 @@ class PixelSortCanvasDrawer {
             this.pixels.push(pixel);
         }
         
-        this.swapsPerFrameMax = pixelArrLength / 100;
+        this.swapsPerFrameMax = pixelArrLength * .001;
 
         this.scramble();
         this.startRedraw();
@@ -233,7 +233,7 @@ class PixelSortCanvasDrawer {
             }
             
         }
-        setTimeout(this.readFromBuffer, 0);
+        setTimeout(this.readFromBuffer, 4);
     }
 
 

@@ -9,7 +9,7 @@ class Scrambler {
     }
 
     scramble = () => {
-        if(this.count > 3){
+        if(this.count > 1){
             this.onScrambleDone();
             return;
         }
