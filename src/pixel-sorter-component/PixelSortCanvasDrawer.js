@@ -130,15 +130,17 @@ class PixelSortCanvasDrawer {
         this.drawBuffer.enqueue({ogIndex, destIndex});
     }
 
-    convertRelativePosToArrIndex = (pos) => {
-        const adjustedWidth = Math.floor(this.imageData.width / this.pixelWidth);
+    convertPixelBlockPosToArrIndex = (pos) => {
+        const pixelsPerRow = Math.floor(this.imageData.width / this.pixelWidth);
 
-        const rowNum = Math.floor(pos / adjustedWidth);
-        const colNum = Math.floor(pos % adjustedWidth);
+        const rowNum = Math.floor(pos / pixelsPerRow);
+        const colNum = Math.floor(pos % pixelsPerRow);    
 
-        const pixelsPerRow = this.imageData.width;
+        
+        const rowPixels = rowNum * pixelsPerRow * this.pixelWidth * this.pixelWidth;
+        const colPixels = colNum * this.pixelWidth;
 
-        return ((rowNum * pixelsPerRow) + (colNum)) * this.pixelWidth * 4;
+        return ((rowPixels) + (colPixels)) * 4;
     }
 
     getPixelSectionIndexes = (arrPos) => {
@@ -166,8 +168,8 @@ class PixelSortCanvasDrawer {
             console.log(ogIndex);
         }
 
-        ogIndex     = this.convertRelativePosToArrIndex(ogIndex);
-        destIndex   = this.convertRelativePosToArrIndex(destIndex);
+        ogIndex     = this.convertPixelBlockPosToArrIndex(ogIndex);
+        destIndex   = this.convertPixelBlockPosToArrIndex(destIndex);
 
         const rawData = this.imageData.data;
         

@@ -19,3 +19,18 @@ test('Process Pixels', () => {
     }));
 
 });
+
+test('convertPixelBlockPosToArrIndex', () => {
+    const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
+
+    pixelSortCanvasDrawer.pixelWidth = 10;
+    pixelSortCanvasDrawer.imageData.width = 100;
+    pixelSortCanvasDrawer.imageData.height = 100;
+    
+    const pixelBlockPos = 12;
+    const expectedArrPos = 1020 * 4;
+
+    const actualArrPos = pixelSortCanvasDrawer.convertPixelBlockPosToArrIndex(pixelBlockPos);
+    
+    expect(actualArrPos).toBe(expectedArrPos);
+});
