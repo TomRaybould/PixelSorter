@@ -4,7 +4,7 @@
 
 <p>
 
-This project is a visualization of the quicksort algorithm. The pixels of a given image are first scrambled into random positions and then re-sorted in place using quicksort as you watch the image retake it original form. This project currently uses canvas for all pixel manipulation.
+This project is a visualization of the quicksort and heapsort algorithms. The pixels of a given image are first scrambled into random positions and then re-sorted in place using quicksort as you watch the image retake it original form. This project currently uses canvas for all pixel manipulation.
 
 </p>
 
