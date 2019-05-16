@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PixelSorter from './pixel-sorter-component/PixelSorter'
+import PixelSorter from '../pixel-sorter-component/PixelSorter'
 import "./Logo.css"
 
 class Logo extends Component {

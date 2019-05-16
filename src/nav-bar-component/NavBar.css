@@ -1,0 +1,7 @@
+.nav-bar{
+    background-color: #45a29e;
+    width: 100%;
+    position: absolute;
+    border-bottom: 1px solid #66fcf1;
+    height: 75px;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Logo from './Logo'
+import Logo from './logo-component/Logo'
 import './Container.css'
+import NavBar from './nav-bar-component/NavBar';
 
 class Container extends Component {
 
