@@ -1,5 +1,6 @@
 
-# PixelSorter
+![Pixel Sorter](https://res.cloudinary.com/dgrwnfwr2/image/upload/v1557976349/pixelsorterlogo_k6eabv.gif)
+
 
 <p>
 
