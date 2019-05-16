@@ -13,8 +13,8 @@ class Logo extends Component {
                     scramble = {true}
                     pixelWidth = {1}
                     pixelHeight = {84}
-                    afterSortDelay = {500}
-                    pixelsPerFrame = {10}
+                    afterSortDelay = {1000}
+                    pixelsPerFrame = {15}
                     />          
             </div>
         );
