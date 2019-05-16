@@ -11,9 +11,11 @@ class Logo extends Component {
                     algo = "heapSort"
                     loop = {true}
                     scramble = {true}
-                    pixelWidth = {2}
-                    pixelHeight = {2}
-                    afterSortDelay = {1000}/>          
+                    pixelWidth = {1}
+                    pixelHeight = {84}
+                    afterSortDelay = {500}
+                    pixelsPerFrame = {10}
+                    />          
             </div>
         );
     }

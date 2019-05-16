@@ -44,6 +44,7 @@ class PixelSorter extends Component {
         this.canvasDrawer.afterSortDelay = this.props.afterSortDelay;
         this.canvasDrawer.pixelWidth = this.props.pixelWidth ? this.props.pixelWidth : 1;
         this.canvasDrawer.pixelHeight = this.props.pixelHeight ? this.props.pixelHeight : this.canvasDrawer.pixelWidth;
+        this.canvasDrawer.pixelsPerFrame = this.props.pixelsPerFrame;
     } 
 
 }

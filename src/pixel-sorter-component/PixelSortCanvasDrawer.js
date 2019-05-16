@@ -59,8 +59,6 @@ class PixelSortCanvasDrawer {
             pixel.truePosition = i;
             this.pixels.push(pixel);
         }
-        
-        this.swapsPerFrameMax = pixelArrLength * .01;
 
         this.scramble();
         this.startRedraw();
@@ -225,7 +223,7 @@ class PixelSortCanvasDrawer {
 
         if(this.drawBuffer.getSize() > 0){
 
-            const limit = Math.min(this.drawBuffer.getSize(), this.swapsPerFrameMax); 
+            const limit = Math.min(this.drawBuffer.getSize(), this.pixelsPerFrame); 
 
             for(let i = 0; i < limit; i ++){
                 const swapObj = this.drawBuffer.dequeue();
