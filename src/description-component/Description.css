@@ -1,0 +1,10 @@
+.description{
+    margin-top: 10px;
+    width: 50%;
+    height: 100px;
+    font-size: 1.25em;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #c5c6c7;
+    position: relative;
+    float: right;
+}

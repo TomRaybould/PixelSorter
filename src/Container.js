@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Logo from './logo-component/Logo'
 import './Container.css'
-import NavBar from './nav-bar-component/NavBar';
+import TitleContainer from './title-container-component/TitleContainer';
 
 class Container extends Component {
 
@@ -19,7 +19,7 @@ class Container extends Component {
     render() {
         return (
             <div className="container">
-                <Logo/>          
+                <TitleContainer/>
             </div>
         );
     }
