@@ -1,9 +1,9 @@
 .title-container{
     color: #c5c6c7;
     position: absolute;
-    top: 40%;
+    top: 200px;
     left: 50%;
-    width: 75%;
+    width: 60%;
     padding: 10px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%);
 }
