@@ -17,6 +17,7 @@ class PixelSortCanvasDrawer {
         this.shouldScramble = true;  
         this.pixelWidth = 1;
         this.pixelHeight = 1;
+        this.pixelSizeAuto = false;
     }
 
     drawImage = () => {
@@ -45,7 +46,19 @@ class PixelSortCanvasDrawer {
 
         this.imageData = imageData;
         
+        if(this.pixelSizeAuto){
+            this.resizePixels();
+        }
+
         this.processPixels();
+    }
+
+    resizePixels = () =>{
+        this.pixelWidth = Math.floor(this.imageData.width * .05);
+        this.pixelHeight = Math.floor(this.imageData.height * .05);
+        this.pixelWidth = Math.max(1, this.pixelWidth);
+        this.pixelHeight = Math.max(1, this.pixelHeight);
+        this.pixelsPerFrame = 10;
     }
 
     processPixels = () => {

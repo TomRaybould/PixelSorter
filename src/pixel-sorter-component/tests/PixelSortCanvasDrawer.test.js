@@ -276,3 +276,23 @@ test('Pixel Blocks per row', () => {
     expect(actual).toBe(expected);
 
 });
+
+test('Pixels with autosize', () => {
+    
+    const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();
+
+    pixelSortCanvasDrawer.imageData.width = 101;
+    pixelSortCanvasDrawer.imageData.height = 100;
+    pixelSortCanvasDrawer.pixelWidth = 1;
+    pixelSortCanvasDrawer.pixelHeight = 1;
+    pixelSortCanvasDrawer.pixelSizeAuto = true;
+
+    pixelSortCanvasDrawer.resizePixels();
+
+    expect(pixelSortCanvasDrawer.pixelWidth).toBe(5);
+    expect(pixelSortCanvasDrawer.pixelHeight).toBe(5);
+
+});
+
+
+

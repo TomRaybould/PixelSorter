@@ -15,6 +15,7 @@ class Logo extends Component {
                     pixelHeight = {84}
                     afterSortDelay = {1000}
                     pixelsPerFrame = {15}
+                    pixelSizeAuto = {this.props.pixelSizeAuto}
                     />          
             </div>
         );

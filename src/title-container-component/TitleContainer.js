@@ -15,7 +15,9 @@ class TitleContainer extends Component {
     render() {
         return (
             <div className="title-container">
-                <Logo imageFileUrl = {this.state.imageFileUrl ? this.state.imageFileUrl : 'pixel-sorter-logo.png'}/>
+                <Logo imageFileUrl = {this.state.imageFileUrl ? this.state.imageFileUrl : 'pixel-sorter-logo.png'}
+                    pixelSizeAuto = {this.state.pixelSizeAuto}
+                />
                 <Description/>
                 <SettingsGear/>
                 <ImageSelection onFileSelected={this.onFileSelected}/>
@@ -24,7 +26,7 @@ class TitleContainer extends Component {
     }
 
     onFileSelected = (url)=>{
-        this.setState({imageFileUrl : url});
+        this.setState({imageFileUrl : url, pixelSizeAuto : true});
     }
 }
 
