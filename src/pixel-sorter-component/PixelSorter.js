@@ -21,9 +21,12 @@ class PixelSorter extends Component {
 
     render() {
         if(this.canvasDrawer){
+            if(this.props.imageFileUrl !== this.canvasDrawer.imageFileUrl){
+                this.updateCanvas();
+            }
             this.updatePixelSortCanvasDrawer();
         }
-
+    
         return (
             <div className="pixel-sorter">
                 <canvas ref="canvas" className="canvas"/>

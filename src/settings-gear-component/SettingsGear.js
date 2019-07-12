@@ -9,6 +9,8 @@ class SettingsGear extends Component {
             </div>
         );
     }
+
 }
+
 
 export default SettingsGear;
