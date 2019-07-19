@@ -14,6 +14,9 @@ class PixelSorter extends Component {
         
     updateCanvas() {
         this.canvas = this.refs.canvas;
+        if(this.canvasDrawer){
+            this.canvasDrawer.stopDrawing = true;
+        }
         this.canvasDrawer = new PixelSortCanvasDrawer(this.canvas);
         this.updatePixelSortCanvasDrawer();
         this.canvasDrawer.drawImage();

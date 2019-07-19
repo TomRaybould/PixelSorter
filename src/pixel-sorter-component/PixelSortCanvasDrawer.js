@@ -24,7 +24,7 @@ class PixelSortCanvasDrawer {
         if(!this.imageFileUrl){
             this.imageFileUrl = 'pixel-sorter-logo.png'
         }
-        
+    
         var loadImage = function (url, onImageLoaded) {
             var img = new Image();
             img.src = url
@@ -54,8 +54,8 @@ class PixelSortCanvasDrawer {
     }
 
     resizePixels = () =>{
-        this.pixelWidth = Math.floor(this.imageData.width * .05);
-        this.pixelHeight = Math.floor(this.imageData.height * .05);
+        this.pixelWidth = Math.floor(this.imageData.width * .02);
+        this.pixelHeight = Math.floor(this.imageData.height * .02);
         this.pixelWidth = Math.max(1, this.pixelWidth);
         this.pixelHeight = Math.max(1, this.pixelHeight);
         this.pixelsPerFrame = 10;
@@ -114,6 +114,9 @@ class PixelSortCanvasDrawer {
     }
 
     onScrambleFinished = () => {  
+        if(this.stopDrawing){
+            return;
+        }
         this.waitAfterScramble();
     } 
 
@@ -138,6 +141,9 @@ class PixelSortCanvasDrawer {
     }
 
     onPixelsSorted = () => {
+        if(this.stopDrawing){
+            return;
+        }
         this.waitAfterSorting();
     }
 
@@ -234,6 +240,10 @@ class PixelSortCanvasDrawer {
 
     readFromBuffer = () =>{
 
+        if(this.stopDrawing){
+            return;
+        }
+
         if(this.drawBuffer.getSize() > 0){
 
             const limit = Math.min(this.drawBuffer.getSize(), this.pixelsPerFrame); 
@@ -249,6 +259,9 @@ class PixelSortCanvasDrawer {
 
 
     redraw = () => {
+        if(this.stopDrawing){
+            return;
+        }
         this.ctx.putImageData(this.imageData, 0, 0);
         requestAnimationFrame(this.redraw);
     }
