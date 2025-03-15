@@ -18,7 +18,7 @@ Disclaimer: The blurriness/choppiness of the scrambling above is due the recordi
 
 This project was originally bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-And has now since been built with vite 
+And has now since been built with [vite](https://vite.dev/)
 
 In the project directory, you can run:
 
