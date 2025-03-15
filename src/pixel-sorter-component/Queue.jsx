@@ -6,7 +6,7 @@ class Queue{
         this.end = null;
         this.size = 0;
     }
-    
+
     getSize = () => {
         return this.size;
     }
@@ -43,7 +43,7 @@ class Queue{
             return element;
         }
         else{
-            this.front = this.front.next; 
+            this.front = this.front.next;
         }
 
         return element;

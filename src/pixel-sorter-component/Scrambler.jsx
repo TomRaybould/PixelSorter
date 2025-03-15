@@ -13,7 +13,7 @@ class Scrambler {
             this.onScrambleDone();
             return;
         }
-        
+
         for(let i = 0; i < this.pixelArrLength / 10; i++){
             const index1 = Math.floor(Math.random() * this.pixelArrLength);
             const index2 = Math.floor(Math.random() * this.pixelArrLength);

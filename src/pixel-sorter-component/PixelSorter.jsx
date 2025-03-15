@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PixelSortCanvasDrawer from './PixelSortCanvasDrawer.js';
+import PixelSortCanvasDrawer from './PixelSortCanvasDrawer';
 import './PixelSorter.css';
 
 class PixelSorter extends Component {
