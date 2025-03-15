@@ -28,4 +28,4 @@ class Scrambler {
 
 }
 
-export default Scrambler;
+module.exports = Scrambler;

@@ -1,9 +1,9 @@
-import Pixel from './Pixel'
-import Scrambler from './Scrambler'
-import PixelQuickSorter from './PixelQuickSorter'
-import PixelHeapSorter from './PixelHeapSorter'
-import Queue from './Queue'
-import InstantSorter from './InstantSorter';
+const Pixel = require('./Pixel');
+const Scrambler = require('./Scrambler');
+const PixelQuickSorter = require('./PixelQuickSorter');
+const PixelHeapSorter = require('./PixelHeapSorter');
+const Queue = require('./Queue');
+const InstantSorter = require('./InstantSorter');
 
 class PixelSortCanvasDrawer {
     constructor(canvas, imageFileUrl, algo, loop){
@@ -268,5 +268,4 @@ class PixelSortCanvasDrawer {
 
 }
 
-export default PixelSortCanvasDrawer;
-
+module.exports = PixelSortCanvasDrawer;

@@ -1,5 +1,4 @@
-import Pixel from '../PixelSortCanvasDrawer.js'
-import PixelSortCanvasDrawer from '../PixelSortCanvasDrawer.js';
+const  PixelSortCanvasDrawer = require('../PixelSortCanvasDrawer.jsx');
 
 test('Process Pixels', () => {
     const pixelSortCanvasDrawer = new PixelSortCanvasDrawer();

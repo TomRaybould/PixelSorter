@@ -125,4 +125,4 @@ class PixelHeapSorter{
     
 }
 
-export default PixelHeapSorter;
+module.exports = PixelHeapSorter;

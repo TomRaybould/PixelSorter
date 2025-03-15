@@ -13,4 +13,4 @@ class Pixel {
 
 }
 
-export default Pixel;
+module.exports = Pixel;

@@ -1,4 +1,4 @@
-import Pixel from '../Pixel.js'
+const Pixel = require('../Pixel.jsx');
 
 
 test('pixel comparedTo method', () => {

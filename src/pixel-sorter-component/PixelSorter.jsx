@@ -56,4 +56,4 @@ class PixelSorter extends Component {
 
 }
 
-export default PixelSorter;
+module.exports = PixelSorter;

@@ -83,4 +83,4 @@ class PixelQuickSorter{
 
 }
 
-export default PixelQuickSorter;
+module.exports = PixelQuickSorter;

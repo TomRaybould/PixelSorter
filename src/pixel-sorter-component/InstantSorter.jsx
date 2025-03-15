@@ -16,4 +16,4 @@ class InstantSorter{
     
 }
 
-export default InstantSorter;
+module.exports = InstantSorter;
